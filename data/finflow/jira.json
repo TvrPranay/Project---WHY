@@ -1,0 +1,89 @@
+[
+  {
+    "id": "PAY-1042",
+    "source_type": "jira",
+    "title": "Evaluate Tier-1 Payment Gateways for European Card Expansion",
+    "timestamp": "2024-02-15T11:00:00Z",
+    "author": "marcus.vance",
+    "participants": [
+      "marcus.vance",
+      "elena.rostova",
+      "sarah.k"
+    ],
+    "system": "payment-orchestrator",
+    "content": "Description:\nFinFlow is expanding direct merchant acquiring into France and Germany scheduled for Q3 2024. This ticket documents the technical and commercial evaluation of three prospective payment gateway providers:\n\n1. Provider X:\n- Pros: Established French Cartes Bancaires (CB) and German Girocard clearing licenses; compatible with our legacy ISO 8583 settlement pipeline currently used by Tier-1 enterprise partner Apex Retail.\n- Cons: Outdated SOAP/XML payload envelope; higher per-transaction markup (+28 bps); rigid batch settlement window.\n\n2. Provider Y:\n- Pros: Modern developer-first REST/JSON API, sub-120ms p99 latency, automated dispute webhooks.\n- Cons: European banking license (BaFin) currently pending approval; cannot clear Cartes Bancaires or Girocard natively before Q4 2024 or Q1 2025. Co-badged EU transactions would fall back to costly international Visa/Mastercard interchange.\n\n3. Provider Z:\n- Pros: Low processing fees, competitive multi-currency FX rates.\n- Cons: Lacks synchronous 3DS2 challenge callbacks; relies exclusively on asynchronous batched settlement webhooks (up to 6h delay) which breaks our ledger night-audit requirement.\n\nRecommendation:\nSelect Provider X as the immediate path forward for the 2024 EU expansion despite architectural drawbacks, due to immediate local scheme compliance and zero disruption to the Apex Retail ISO 8583 dependency.",
+    "metadata": {
+      "ticket_key": "PAY-1042",
+      "priority": "High",
+      "issue_type": "Spike / Evaluation",
+      "status": "Closed / Resolved",
+      "resolution": "Provider X selected as temporary solution",
+      "labels": ["payments", "european-expansion", "evaluation", "p0"]
+    }
+  },
+  {
+    "id": "PAY-1288",
+    "source_type": "jira",
+    "title": "Implement Legacy Payment Gateway Adapter for Provider X (Temporary Rail)",
+    "timestamp": "2024-06-22T09:30:00Z",
+    "author": "devon.chen",
+    "participants": [
+      "devon.chen",
+      "marcus.vance"
+    ],
+    "system": "payment-orchestrator",
+    "content": "Description:\nConstruct a translation adapter (`LegacyGatewayAdapter`) between the FinFlow payment orchestration engine and Provider X's legacy XML gateway endpoint.\n\nScope:\n- Translate JSON authorization requests into Provider X's XML schema containing ISO 8583 fields (Field 3: Processing Code, Field 4: Transaction Amount, Field 48: Local Scheme Data for Cartes Bancaires).\n- Maintain compatibility with Apex Retail's existing batch settlement pipeline.\n- Add circuit breaker with 2500ms timeout for legacy socket connections.\n\nArchitectural Note:\nThis adapter is treated as a short-term workaround to expedite European market launch without rewriting our core settlement reconciliation service. It should be scheduled for deprecation once multi-rail unified processing is deployed.",
+    "metadata": {
+      "ticket_key": "PAY-1288",
+      "priority": "High",
+      "issue_type": "Story",
+      "status": "Done",
+      "resolution": "Completed",
+      "labels": ["adapter", "technical-debt", "legacy-gateway", "provider-x"]
+    }
+  },
+  {
+    "id": "PAY-2104",
+    "source_type": "jira",
+    "title": "Provider X Settlement Delay & Reconciliation Discrepancies",
+    "timestamp": "2025-07-08T15:20:00Z",
+    "author": "tariq.ahmed",
+    "participants": [
+      "tariq.ahmed",
+      "sarah.k",
+      "marcus.vance"
+    ],
+    "system": "settlement-reconciliation",
+    "content": "Description:\nFinance operations reports recurring discrepancies in European merchant settlements. Provider X's service contract specifies T+1 settlement finality, but settlement batches over the past 6 weeks have consistently arrived at T+2 or T+3.\n\nImpact:\n- European merchant payouts delayed by up to 48 hours.\n- Settlement-reconciliation service is forced to run compensating manual reconciliation jobs.\n- Finance team has escalated penalty fees under Section 4.2 of the Provider X Master Services Agreement.\n\nRoot Cause Analysis:\nProvider X's European clearing node in Frankfurt has experienced backlogs in processing local Girocard settlement batches. Provider X technical account team has failed to provide a permanent resolution.",
+    "metadata": {
+      "ticket_key": "PAY-2104",
+      "priority": "Critical",
+      "issue_type": "Bug / Operations",
+      "status": "In Progress",
+      "resolution": "Unresolved - Vendor escalation active",
+      "labels": ["settlement", "finance", "sla-breach", "provider-x"]
+    }
+  },
+  {
+    "id": "PAY-3310",
+    "source_type": "jira",
+    "title": "Apex Retail Migration to REST API v2 Complete",
+    "timestamp": "2026-03-05T14:10:00Z",
+    "author": "alicia.m",
+    "participants": [
+      "alicia.m",
+      "devon.chen",
+      "marcus.vance"
+    ],
+    "system": "payment-orchestrator",
+    "content": "Description:\nApex Retail, FinFlow's highest-volume enterprise partner, has officially completed its multi-quarter migration from the legacy ISO 8583 protocol broker to FinFlow's modern REST API v2 (`/v2/payments/authorize` and `/v2/settlements/stream`).\n\nVerification:\n- 100% of Apex Retail live traffic (approx. 65k txns/day) is now routing through the v2 gateway.\n- The legacy ISO 8583 socket server and batch files have been quiesced and have had zero inbound traffic for 7 consecutive days.\n- Sign-off received from Apex Retail VP of Engineering.\n\nNote:\nThe legacy ISO 8583 adapter infrastructure was originally kept active primarily to support Apex Retail's legacy protocol requirement. With this migration finished, this blocker has been eliminated.",
+    "metadata": {
+      "ticket_key": "PAY-3310",
+      "priority": "Medium",
+      "issue_type": "Task",
+      "status": "Done",
+      "resolution": "Completed & Verified",
+      "labels": ["enterprise", "migration", "apex-retail", "milestone"]
+    }
+  }
+]

@@ -1,0 +1,108 @@
+[
+  {
+    "id": "SLACK-001",
+    "source_type": "slack",
+    "title": "Discussion on European acquiring provider selection",
+    "timestamp": "2024-03-12T14:22:15Z",
+    "author": "marcus.vance",
+    "participants": [
+      "marcus.vance",
+      "elena.rostova",
+      "devon.chen",
+      "sarah.k"
+    ],
+    "system": "payment-orchestrator",
+    "content": "marcus.vance (14:22): Looking over the provider matrix for European card processing. We need local debit routing for French Cartes Bancaires and German Girocard before the Q3 product launch in Paris and Berlin. Provider Y's sales team says their BaFin direct acquiring license is still in regulatory review in Frankfurt and won't be ready until at least Q4 or early 2025.\n\nelena.rostova (14:26): That's a dealbreaker for launch. Cartes Bancaires co-badged transactions will fail over to Visa/Mastercard international interbank interchange without local scheme routing, which adds nearly 85 bps to transaction processing costs.\n\ndevon.chen (14:31): What about Provider Z? They claim pan-European coverage.\n\nmarcus.vance (14:33): Provider Z's API only supports asynchronous settlement webhook callbacks with unpredictable delays up to 6 hours. Our settlement-reconciliation service requires deterministic T+1 batch reconciliation files or synchronous settlement status, otherwise night batch accounting fails.\n\nsarah.k (14:40): Provider X isn't pretty—their API still uses an XML wrapper around ISO 8583 fields and their support SLA is average—but they have active French CB and German Girocard certification in production today. We also already have their ISO parser integrated for the Apex Retail merchant contract.",
+    "metadata": {
+      "channel": "#proj-eu-payments",
+      "team": "payments-core",
+      "thread_ts": "1710253335.001200",
+      "reply_count": 4,
+      "environment": "production"
+    }
+  },
+  {
+    "id": "SLACK-002",
+    "source_type": "slack",
+    "title": "Temporary adapter decision for Provider X ISO gateway",
+    "timestamp": "2024-08-20T10:15:40Z",
+    "author": "devon.chen",
+    "participants": [
+      "devon.chen",
+      "marcus.vance",
+      "alicia.m"
+    ],
+    "system": "payment-orchestrator",
+    "content": "devon.chen (10:15): Heads up team, PR #412 introduces the `LegacyGatewayAdapter` to bridge our modern JSON payment-orchestration pipeline to Provider X's legacy XML/ISO endpoints. We don't have time to re-architect the reconciliation pipeline before the EU market rollout.\n\nmarcus.vance (10:18): Acknowledged. We agreed in ADR-014 that this adapter is a short-term workaround strictly for the European expansion until we can evaluate a unified multi-rail processor next year.\n\nalicia.m (10:22): Just make sure it's tagged clearly as technical debt in Jira. Apex Retail is currently pumping 40k transactions/day through the legacy ISO settlement listener, so we cannot touch that message pipeline anyway without coordinated downtime on their end.",
+    "metadata": {
+      "channel": "#payments-core",
+      "team": "payments-core",
+      "thread_ts": "1724148940.004500",
+      "reply_count": 3,
+      "environment": "production"
+    }
+  },
+  {
+    "id": "SLACK-003",
+    "source_type": "slack",
+    "title": "Incident discussion regarding dropped Provider X webhooks",
+    "timestamp": "2025-04-10T16:45:00Z",
+    "author": "oncall-lead",
+    "participants": [
+      "oncall-lead",
+      "elena.rostova",
+      "tariq.ahmed"
+    ],
+    "system": "webhook-processor",
+    "content": "oncall-lead (16:45): Pager alert firing: Webhook ingestion dropped 1,400 authorization capture events from Provider X in the last 45 minutes for EU merchant traffic.\n\nelena.rostova (16:48): Looking at the logs. Provider X returned 503 on their webhook retry endpoint and dropped the connection. Our legacy XML proxy couldn't parse their malformed fault payload.\n\ntariq.ahmed (16:52): This is the third time this quarter Provider X has violated their 99.95% delivery SLA. In their original SLA agreement they promised T+1 settlement and 99.95% webhook uptime, but their gateway reliability in Frankfurt has been degrading. Finance is going to have a nightmare balancing end-of-day ledgers tonight.",
+    "metadata": {
+      "channel": "#incident-war-room",
+      "team": "sre-and-core",
+      "thread_ts": "1744303500.009800",
+      "reply_count": 3,
+      "environment": "production"
+    }
+  },
+  {
+    "id": "SLACK-004",
+    "source_type": "slack",
+    "title": "Debate on persistent tech debt of Provider X legacy adapter",
+    "timestamp": "2025-11-15T11:05:22Z",
+    "author": "sarah.k",
+    "participants": [
+      "sarah.k",
+      "marcus.vance",
+      "devon.chen"
+    ],
+    "system": "settlement-reconciliation",
+    "content": "sarah.k (11:05): Can someone explain why the 'temporary' legacy gateway adapter from August 2024 is still routing 100% of our French and German card volume? We just hit our 15-month mark with this workaround and it's blocking our v2 settlement engine refactor.\n\nmarcus.vance (11:09): The blocker hasn't changed. Apex Retail is still using the custom ISO 8583 protocol broker tied into that same gateway interface. If we pull the plug on the legacy gateway pipeline, Apex Retail's offline batch settlement fails.\n\ndevon.chen (11:14): Plus Provider X is still the only provider we have configured with direct Cartes Bancaires and Girocard clearing channels. Until merchant ops migrates Apex Retail or another provider gets certified on French/German rails, we're stuck paying Provider X's penalty fees.",
+    "metadata": {
+      "channel": "#payments-arch",
+      "team": "architecture",
+      "thread_ts": "1763204722.001920",
+      "reply_count": 3,
+      "environment": "production"
+    }
+  },
+  {
+    "id": "SLACK-005",
+    "source_type": "slack",
+    "title": "Partner announcement: Provider Y obtains European acquiring license",
+    "timestamp": "2026-02-18T09:30:15Z",
+    "author": "jordan.taylor",
+    "participants": [
+      "jordan.taylor",
+      "elena.rostova",
+      "marcus.vance"
+    ],
+    "system": "payment-orchestrator",
+    "content": "jordan.taylor (09:30): Big news from the Frankfurt FinTech summit: Provider Y officially received full BaFin and ECB regulatory approval for direct European acquiring, including native Cartes Bancaires, Girocard, and SEPA instant rails via standard REST/JSON API with zero SOAP/XML legacy requirements.\n\nelena.rostova (09:34): That directly removes the technical blocker from our 2024 evaluation (ADR-014). Back then, Provider Y was disqualified solely because their European license was delayed and couldn't process CB/Girocard locally.\n\nmarcus.vance (09:38): Also check out their pricing sheet: 14 bps lower interchange markup than Provider X, with guaranteed T+1 real-time webhooks. We should check if Apex Retail's API migration is complete so we can finally sunset the Legacy Payment Gateway.",
+    "metadata": {
+      "channel": "#payments-partners",
+      "team": "product-partnerships",
+      "thread_ts": "1771407015.007600",
+      "reply_count": 3,
+      "environment": "production"
+    }
+  }
+]

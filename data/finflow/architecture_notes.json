@@ -1,0 +1,63 @@
+[
+  {
+    "id": "ADR-014",
+    "source_type": "architecture_note",
+    "title": "Selection of Provider X for European Acquired Transactions",
+    "timestamp": "2024-04-05T14:00:00Z",
+    "author": "marcus.vance",
+    "participants": [
+      "marcus.vance",
+      "elena.rostova",
+      "devon.chen",
+      "sarah.k"
+    ],
+    "system": "payment-orchestrator",
+    "content": "Context:\nFinFlow requires direct card acquiring in the European Union (specifically France and Germany) by Q3 2024. Without local scheme routing (Cartes Bancaires in France and Girocard in Germany), interchange fees will be unsustainably high and local conversion rates will suffer.\n\nOptions Considered:\n1. Provider X:\n- Has operational French CB and German Girocard clearing licenses.\n- Compatible with FinFlow's existing ISO 8583 settlement pipeline, which our Tier-1 enterprise merchant Apex Retail currently relies on.\n- Negative: Outdated XML/SOAP protocol, higher basis points (28 bps markup), batch-oriented processing.\n2. Provider Y:\n- State-of-the-art REST API and high developer ergonomics.\n- Disqualified: BaFin direct acquiring certification is delayed in Frankfurt; cannot clear local debit schemes until late 2024 or 2025.\n3. Provider Z:\n- Competitive fee structure.\n- Disqualified: Webhook delivery is asynchronous with multi-hour lag; lacks synchronous 3DS2 biometric challenge handling.\n\nDecision:\nAdopt Provider X as the gateway for European acquired card payments. We will build a temporary `LegacyGatewayAdapter` in `payment-orchestrator` to bridge our JSON services to Provider X's legacy XML endpoints.\n\nRevisit Criteria:\nThis decision is explicitly time-bounded and subject to review in 12 to 18 months. Re-evaluation triggers include: (1) Provider Y or another modern gateway obtaining native European scheme certification, or (2) Apex Retail completing migration away from legacy ISO 8583 message protocols.",
+    "metadata": {
+      "doc_type": "Architecture Decision Record",
+      "status": "Accepted (Time-Bounded)",
+      "review_interval": "12-18 months",
+      "tags": ["adr", "payments", "provider-x", "europe", "temporary-architecture"]
+    }
+  },
+  {
+    "id": "ARCH-2025-08",
+    "source_type": "architecture_note",
+    "title": "Q3 Payment Modernization Review & Technical Debt Audit",
+    "timestamp": "2025-09-18T10:00:00Z",
+    "author": "devon.chen",
+    "participants": [
+      "devon.chen",
+      "marcus.vance",
+      "sarah.k",
+      "tariq.ahmed"
+    ],
+    "system": "payment-orchestrator",
+    "content": "Meeting Minutes - Architecture Review Committee:\n\n1. Technical Debt Assessment:\n- The `LegacyGatewayAdapter` built for Provider X in August 2024 was designated as a short-term workaround. It is now 13 months old and remains the sole conduit for all French and German card volume.\n- Performance impact: Legacy XML translation introduces 35-50ms of CPU overhead per transaction, and socket concurrency caps caused Black Friday checkout throttling (INC-2024-09).\n\n2. Financial & Reliability Friction:\n- Provider X has breached their contractual T+1 settlement SLA multiple times this year (see PAY-2104 and INC-2025-11), resulting in delayed merchant payouts.\n- The 28 bps markup on Provider X is costing FinFlow an estimated extra EUR 180K annually compared to modern interchange-plus pricing models.\n\n3. Decommissioning Blockers:\n- Why can't we decommission Provider X today? Two reasons: (a) Provider Y still has not announced general availability of certified Cartes Bancaires clearing, and (b) Apex Retail continues to route 45K txns/day through the legacy ISO 8583 gateway bridge. Until Apex Retail completes their API v2 migration, the legacy pipeline cannot be safely severed.\n\nAction Item:\nProduct team to push Apex Retail engineering to prioritize REST v2 migration by Q1 2026.",
+    "metadata": {
+      "doc_type": "Architecture Review Minutes",
+      "status": "Deferred",
+      "tags": ["tech-debt", "legacy-gateway", "audit", "blockers"]
+    }
+  },
+  {
+    "id": "ADR-028",
+    "source_type": "architecture_note",
+    "title": "Feasibility Assessment: Decommissioning Legacy Payment Gateway & Provider X",
+    "timestamp": "2026-04-12T15:30:00Z",
+    "author": "elena.rostova",
+    "participants": [
+      "elena.rostova",
+      "marcus.vance",
+      "devon.chen",
+      "sarah.k"
+    ],
+    "system": "payment-orchestrator",
+    "content": "Context & Problem Statement:\nFinFlow has maintained the Legacy Payment Gateway adapter and Provider X routing for European card payments since April 2024 (governed by ADR-014). This architecture review re-evaluates whether the historical justifications for maintaining Provider X still hold in Q2 2026.\n\nStatus of Historical Constraints:\n1. Local Scheme Support (Cartes Bancaires & Girocard):\n- In 2024: Provider X was the only viable provider with active certifications.\n- In 2026: Provider Y has obtained official BaFin/ECB licensing (verified February 2026) and offers direct CB and Girocard acquiring over a modern JSON/HTTP2 API at 14 bps lower fees.\n\n2. Enterprise Merchant ISO 8583 Dependency (Apex Retail):\n- In 2024: Decommissioning the legacy adapter was blocked by Apex Retail's high-volume ISO socket integration.\n- In 2026: Apex Retail successfully migrated 100% of their volume to REST API v2 in March 2026 (PAY-3310). The legacy ISO socket server currently receives zero traffic.\n\n3. Reliability & Settlement SLA:\n- Provider X has repeatedly breached the contracted T+1 settlement SLA, causing multiple high-severity financial and operational incidents (INC-2025-03, INC-2025-11, PAY-2104).\n\nConclusion:\nEvery technical and business constraint that originally mandated the selection of Provider X and the retention of the Legacy Payment Gateway has either expired or been resolved. The original architectural justification is now invalid.\n\nRecommendation:\nMark decision ADR-014 as REVIEW REQUIRED / DEPRECATION CANDIDATE. Proceed with migration of European card processing to modern multi-rail infrastructure.",
+    "metadata": {
+      "doc_type": "Architecture Decision Record",
+      "status": "Review Required / Proposed Deprecation",
+      "tags": ["adr", "invalidation", "deprecation", "provider-y", "modernization"]
+    }
+  }
+]

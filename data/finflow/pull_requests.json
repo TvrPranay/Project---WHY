@@ -1,0 +1,66 @@
+[
+  {
+    "id": "PR-412",
+    "source_type": "pull_request",
+    "title": "feat(routing): Add dual-scheme BIN routing for Provider X with temporary fallback",
+    "timestamp": "2024-07-10T16:20:00Z",
+    "author": "devon.chen",
+    "participants": [
+      "devon.chen",
+      "elena.rostova",
+      "marcus.vance"
+    ],
+    "system": "payment-orchestrator",
+    "content": "PR Summary:\nImplements BIN routing logic in `PaymentRouter.ts` to direct French (CB) and German (Girocard) issued cards to the newly added `ProviderXGatewayAdapter`. Includes synchronous 3DS2 challenge dispatch.\n\nReview Comments:\n- elena.rostova (2024-07-10 17:05): LGTM on the BIN routing table. Quick question: did we consider Provider Z for this routing tier? Their transaction pricing was notably lower.\n- devon.chen (2024-07-10 17:15): Yes, we tested Provider Z in staging sandbox last month. Provider Z failed our 3DS2 test suite: they do not support synchronous merchant challenge redirection, and their webhook callback arrived 4 minutes after the cardholder completed authentication on mobile. Users would be staring at a loading spinner. That disqualifies Provider Z for European card flows.\n- marcus.vance (2024-07-10 18:00): Approved. We have to tolerate Provider X's legacy XML payload formatting for now. Remember this adapter is temporary for Q3/Q4 2024.",
+    "metadata": {
+      "repo": "finflow/payment-orchestrator",
+      "pr_number": 412,
+      "base_branch": "main",
+      "head_branch": "feat/provider-x-routing",
+      "status": "merged",
+      "merged_at": "2024-07-11T09:12:00Z"
+    }
+  },
+  {
+    "id": "PR-685",
+    "source_type": "pull_request",
+    "title": "fix(reconciliation): Add retry buffer for Provider X missing settlement webhooks",
+    "timestamp": "2025-02-14T11:40:00Z",
+    "author": "sarah.k",
+    "participants": [
+      "sarah.k",
+      "tariq.ahmed"
+    ],
+    "system": "settlement-reconciliation",
+    "content": "PR Summary:\nAdds an in-memory Redis buffer and exponential backoff retry worker (`SettlementRetryQueue`) specifically for Provider X batch webhook ingest.\n\nReview Comments:\n- tariq.ahmed (2025-02-14 13:20): Is this retry logic needed for all our payment providers or just Provider X?\n- sarah.k (2025-02-14 13:35): Only Provider X. Our domestic US gateways deliver webhooks within 500ms at 99.99% reliability. Provider X drops connection bursts during European market close (around 17:00 CET) without queuing them on their end. Without this 48-hour retry buffer, our automated ledger balance fails every Friday.\n- tariq.ahmed (2025-02-14 14:02): Pretty frustrating considering Provider X contractual SLA promised high availability. Approving as a necessary safeguard for operations.",
+    "metadata": {
+      "repo": "finflow/settlement-service",
+      "pr_number": 685,
+      "base_branch": "main",
+      "head_branch": "fix/provider-x-retry-buffer",
+      "status": "merged",
+      "merged_at": "2025-02-15T08:30:00Z"
+    }
+  },
+  {
+    "id": "PR-940",
+    "source_type": "pull_request",
+    "title": "refactor(gateway-interface): Decouple payment-orchestrator from ISO-8583 message formatter",
+    "timestamp": "2026-01-22T14:50:00Z",
+    "author": "devon.chen",
+    "participants": [
+      "devon.chen",
+      "marcus.vance"
+    ],
+    "system": "payment-orchestrator",
+    "content": "PR Summary:\nIsolates the legacy ISO-8583 socket formatting logic into an optional standalone plugin module (`legacy-iso-bridge`), allowing the core orchestration engine to run purely on JSON/gRPC contracts.\n\nReview Comments:\n- marcus.vance (2026-01-22 15:30): This is great work. With this separation, is anything outside of Provider X and the Apex Retail legacy socket server still touching ISO-8583 code?\n- devon.chen (2026-01-22 15:42): Nothing else. Once Apex Retail finishes their REST API v2 migration (ticket PAY-3310), this legacy module will literally only be kept alive because Provider X's EU gateway requires XML-wrapped ISO 8583 bitmaps. If we switch to a modern European provider, we can delete this entire module and drop 12,000 lines of legacy code.",
+    "metadata": {
+      "repo": "finflow/payment-orchestrator",
+      "pr_number": 940,
+      "base_branch": "main",
+      "head_branch": "refactor/decouple-iso8583",
+      "status": "merged",
+      "merged_at": "2026-01-23T10:15:00Z"
+    }
+  }
+]

@@ -1,0 +1,69 @@
+[
+  {
+    "id": "INC-2024-09",
+    "source_type": "incident",
+    "title": "High latency and 504 timeouts on European checkout during Black Friday",
+    "timestamp": "2024-11-28T20:15:00Z",
+    "author": "sre-incident-team",
+    "participants": [
+      "sre-incident-team",
+      "devon.chen",
+      "marcus.vance",
+      "elena.rostova"
+    ],
+    "system": "checkout-service",
+    "content": "Incident Summary:\nDuring Black Friday peak checkout volumes between 18:30 and 19:45 CET, checkout conversion dropped by 18% across French and German storefronts. Customers experienced 504 Gateway Timeout errors upon submitting payments.\n\nRoot Cause Analysis:\nThe `LegacyGatewayAdapter` connecting payment-orchestrator to Provider X became throttled. Provider X's legacy XML gateway enforces a strict connection pool concurrency ceiling of 60 simultaneous TCP socket streams per merchant certificate. Under peak volume, connections backlogged, causing checkout thread exhaustion.\n\nMitigation & Recovery:\nTemporary connection pool bursting was requested from Provider X NOC. Non-essential card pre-validation calls were bypassed.\n\nPost-Mortem Actions:\nLong-term fix is migrating to a modern HTTP/2 or gRPC payment gateway supporting connection multiplexing. Provider X's infrastructure constraints remain a systemic bottleneck for high-concurrency European sales events.",
+    "metadata": {
+      "incident_id": "INC-2024-09",
+      "severity": "Sev-2",
+      "duration_minutes": 75,
+      "impact": "18% drop in EU checkout conversion; ~2,400 failed transactions",
+      "status": "Resolved",
+      "environment": "production"
+    }
+  },
+  {
+    "id": "INC-2025-03",
+    "source_type": "incident",
+    "title": "Provider X European Webhook Outage causing delayed order fulfillment",
+    "timestamp": "2025-06-19T14:30:00Z",
+    "author": "sarah.k",
+    "participants": [
+      "sarah.k",
+      "tariq.ahmed",
+      "oncall-lead"
+    ],
+    "system": "webhook-processor",
+    "content": "Incident Summary:\nProvider X's European clearing node experienced an unannounced datacenter migration in Frankfurt between 10:00 and 14:15 UTC, resulting in 4 hours and 15 minutes of completely dropped authorization and settlement webhooks.\n\nDownstream Impact:\nBecause merchant orders are marked as fulfilled only upon receiving the authenticated capture webhook, approximately 8,100 European customer orders remained in a 'PENDING_CAPTURE' state, triggering merchant complaints and customer support ticket surges.\n\nRecovery:\nEngineers had to extract raw settlement files from Provider X's SFTP server and run an emergency batch reconciliation script (`scripts/emergency_reconcile_provider_x.py`) to retroactively advance order states.\n\nPost-Mortem Takeaway:\nContractual reliability commitment was 99.95% availability. Provider X availability for June 2025 dropped to 99.38%. Provider X's lack of automated webhook queuing demonstrates that their architecture has not modernized.",
+    "metadata": {
+      "incident_id": "INC-2025-03",
+      "severity": "Sev-1",
+      "duration_minutes": 255,
+      "impact": "8,100 European orders delayed; merchant support escalation",
+      "status": "Resolved",
+      "environment": "production"
+    }
+  },
+  {
+    "id": "INC-2025-11",
+    "source_type": "incident",
+    "title": "Reconciliation mismatch: Provider X settlement batch missing EUR 420K in Girocard transactions",
+    "timestamp": "2025-12-02T09:10:00Z",
+    "author": "tariq.ahmed",
+    "participants": [
+      "tariq.ahmed",
+      "sarah.k",
+      "marcus.vance"
+    ],
+    "system": "settlement-reconciliation",
+    "content": "Incident Summary:\nDaily automated reconciliation flagged an unexplained deficit of EUR 420,180.50 between the general ledger expected receipts and the actual bank depository wire from Provider X for Cyber Monday settlement.\n\nRoot Cause Analysis:\nProvider X failed to clear the German Girocard batch files into the Bundesbank clearing system due to an internal sequence number collision on their legacy batch formatter. The settlement was delayed from the contracted T+1 schedule to T+3, creating an unhedged liquidity gap on FinFlow's European operating account.\n\nResolution:\nProvider X executed an out-of-cycle wire on December 4. FinFlow treasury covered the 48-hour gap from reserve capital.\n\nEscalation:\nFinance VP issued formal breach notification to Provider X executive leadership. Team noted that Provider X's legacy infrastructure is posing recurring financial and operational risks.",
+    "metadata": {
+      "incident_id": "INC-2025-11",
+      "severity": "Sev-2",
+      "duration_minutes": 2880,
+      "impact": "EUR 420K 48-hour liquidity shortfall; SLA breach notice issued",
+      "status": "Resolved",
+      "environment": "production"
+    }
+  }
+]
