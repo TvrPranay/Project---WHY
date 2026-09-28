@@ -55,7 +55,7 @@
 
 ## 1. What is WHY?
 
-**WHY** is an AI agent that remembers why organizational engineering and product decisions were made and proactively detects when the assumptions supporting those decisions may no longer be valid.
+**WHY** is an AI agent that remembers why organizational engineering and product decisions were made and detects when the assumptions supporting those decisions may no longer be valid when new evidence is evaluated.
 
 Modern systems are effective at logging *what* occurred—code changes, completed tickets, and incident timelines. However, they lose the context of *why* choices were made: the trade-offs accepted, the migration blockers that forced compromises, and the external dependencies that dictated vendor selections. WHY reconstructs this institutional reasoning and monitors its validity over time.
 
@@ -82,7 +82,7 @@ WHY introduces **Organizational Decision Memory**:
 - **Consolidates Scattered Evidence**: Aggregates disparate operational records into Hindsight long-term memory.
 - **Synthesizes Decision Provenance**: Reconstructs the exact context, alternatives considered, constraints, and chosen rationale with strict source citations.
 - **Audits Temporal Validity**: Re-evaluates original assumptions against subsequent operational records (subsequent Slack messages, newer tickets, incident postmortems).
-- **Surfaces Actionable Review Signals**: Automatically marks outdated decisions as `REVIEW REQUIRED` without hallucinating or overriding human authority.
+- **Surfaces Actionable Review Signals**: Surfaces `REVIEW REQUIRED` status when historical assumptions are found to be invalidated, without overriding human authority.
 
 ---
 
@@ -99,7 +99,7 @@ WHY introduces **Organizational Decision Memory**:
 WHY executes a structured intelligence workflow:
 
 ```
-Organizational Evidence (Slack, Jira, PRs, ADRs, Incidents)
+Synthetic Evidence Types (Slack, Jira, PRs, ADRs, Incidents)
                           ↓
               Hindsight Persistent Memory
                           ↓
@@ -116,7 +116,7 @@ Organizational Evidence (Slack, Jira, PRs, ADRs, Incidents)
          Decision Assessment (e.g. REVIEW REQUIRED)
 ```
 
-1. **Ingest Evidence**: Multi-source operational records are normalized and retained into Hindsight Cloud (`finflow-why`).
+1. **Ingest Evidence**: Normalized records across Slack, Jira, GitHub PR, ADR, and incident source types from the synthetic FinFlow dataset are retained into Hindsight Cloud (`finflow-why`).
 2. **Reconstruct Reasoning**: Extracts the core decision, drivers, constraints, and rejected alternatives with strict citations (`ADR-014`, `PAY-1042`).
 3. **Recall Institutional History**: Checks for prior WHY investigations into the same decision to maintain continuity.
 4. **Evaluate Temporal Drift**: Cross-references 2024 assumptions against 2025–2026 evidence (e.g., incident reports, client API migrations).
@@ -129,7 +129,7 @@ Organizational Evidence (Slack, Jira, PRs, ADRs, Incidents)
 
 WHY relies on **Hindsight** as its dedicated persistent memory infrastructure rather than a generic vector database replacement.
 
-- **Persistent Institutional Memory**: Hindsight retains entities, relationships, and temporal chronology across distinct operational sources (Slack, Jira, ADRs).
+- **Persistent Institutional Memory**: Hindsight provides persistent memory that allows WHY to retain and recall organizational evidence across investigations.
 - **Compounding Investigation History**: When WHY investigates a decision, it retains that investigation back into Hindsight under a distinct memory type (`decision_investigation`). Future investigations recall this prior AI context alongside primary evidence.
 - **Strict Epistemic Hierarchy**:
   $$\text{Primary Organizational Evidence} > \text{Prior AI Reasoning}$$
@@ -139,15 +139,15 @@ WHY relies on **Hindsight** as its dedicated persistent memory infrastructure ra
 
 ## 7. How This Is Different From RAG
 
-Standard Retrieval-Augmented Generation (RAG) is well-suited for retrieving relevant text chunks for static question answering. However, organizational decision tracking requires capabilities beyond standard RAG retrieval:
+Basic/static RAG commonly retrieves relevant documents for the current query. WHY explicitly models the decision baseline, subsequent evidence, persistent investigation history, and decision status.
 
-| Dimension | Standard RAG | WHY + Hindsight Memory |
+| Dimension | Basic / Static RAG | WHY + Hindsight Memory |
 | :--- | :--- | :--- |
-| **Core Objective** | Answer questions using top-$k$ text snippets | Reconstruct decision rationale and audit temporal validity |
-| **Temporal Awareness** | Often treats all retrieved chunks as equally current | Understands chronology: 2024 decision baseline vs. 2025–2026 changes |
-| **Assumption Drift** | Unaware of whether an assumption from 2024 has expired | Proactively evaluates whether 2024 assumptions were invalidated by 2026 signals |
-| **Investigation Memory** | Stateless per query; prior reasoning is discarded | Compounding memory retains previous investigations into Hindsight |
-| **Decision Status** | Generates narrative text with no formal status | Computes deterministic decision states (`REVIEW_REQUIRED`, `ACTIVE`, etc.) |
+| **Primary Scope** | Retrieves relevant text snippets for an individual query | Models decision reasoning baseline and compares against subsequent evidence |
+| **Temporal Focus** | Commonly retrieves documents without differentiating baseline vs. subsequent changes | Explicitly structures chronology: 2024 decision baseline vs. 2025–2026 events |
+| **Assumption Drift** | Answers questions based on retrieved content without tracking assumption lifecycles | Evaluates whether historical assumptions were invalidated when new evidence is evaluated |
+| **Investigation Continuity** | Queries are typically handled independently | Compounding memory retains completed decision investigations in Hindsight |
+| **Decision State** | Produces unstructured explanatory text | Synthesizes evidence to produce explicit decision states (`REVIEW_REQUIRED`, `ACTIVE`, etc.) |
 
 ---
 
@@ -156,8 +156,8 @@ Standard Retrieval-Augmented Generation (RAG) is well-suited for retrieving rele
 WHY organizes institutional memory into two distinct tiers:
 
 1. **Primary Organizational Evidence (`finflow-why`)**:
-   - Ingested from canonical developer and product tools (Slack, Jira, GitHub, ADRs, Incident Postmortems).
-   - Serves as the ground-truth baseline of what happened and what was documented.
+   - Represents developer and product source types (Slack discussions, Jira tickets, GitHub pull requests, ADRs, and incident postmortems) from the synthetic FinFlow demonstration dataset.
+   - Serves as the ground-truth baseline of what was documented in the demonstration scenario.
 2. **Decision Investigation Memories (`WHY-INV-...`)**:
    - Stored in Hindsight with structured metadata (`decision_id`, `status`, `affected_reasons`, `invalidated_assumptions`).
    - Retrieved during future inquiries to preserve reasoning history across leadership changes.
@@ -213,7 +213,7 @@ WHY includes a built-in comparative benchmark (`POST /api/v1/demo/memory-compari
 | **Apex Retail ISO 8583 Reason** | Undetected | Identified from `PAY-1042` |
 | **Temporal Change Detection** | Not possible (no baseline) | Detected changed assumptions & SLA breaches |
 | **Investigation Compounding**| None (stateless) | Retains & recalls previous WHY investigations |
-| **Factual Hallucination** | 0% (honest refusal) | 0% (grounded in cited primary records) |
+| **Evidence Grounding** | Refuses when sufficient evidence is unavailable | Reconstructed reasoning is tied to retrieved primary evidence |
 
 ---
 
@@ -243,7 +243,7 @@ FinFlow is a synthetic European fintech scale-up used as the reference demonstra
   1. *Apex Retail constraint removed*: Migrated to REST v2 (`PAY-3310`).
   2. *Licensing moat eliminated*: Alternative Provider Y secured Girocard certification (`SLACK-005`).
   3. *Operational friction*: Recurring settlement SLA breaches documented in `INC-2025-11`.
-- **Recommended Action**: Re-evaluate the European acquiring contract before the upcoming renewal window.
+- **Review Signal**: The original decision should be re-evaluated because multiple foundational assumptions have changed.
 
 ---
 
@@ -290,9 +290,9 @@ flowchart TD
 
 - **Backend**: Python 3.11+, FastAPI, Pydantic v2, HTTPX, Pytest
 - **Memory Engine**: **Hindsight** via the official `hindsight-client` Python SDK
-- **LLM Reasoning**: Groq SDK (`llama-3.3-70b-versatile`) with low-temperature deterministic synthesis and offline fallback
+- **LLM Reasoning**: Groq SDK (`llama-3.3-70b-versatile`) with low-temperature deterministic synthesis (mock/offline providers are maintained separately for the test suite)
 - **Frontend**: React 18, TypeScript 5.4, Vite 5.2, Tailwind CSS, Lucide React
-- **Dataset**: Normalized FinFlow multi-source event collection (Slack, Jira, GitHub PRs, ADRs, Incidents)
+- **Dataset**: Synthetic FinFlow dataset representing multiple source types (Slack discussions, Jira tickets, GitHub PRs, ADRs, Incidents)
 
 ---
 
@@ -347,7 +347,7 @@ why/
 - **Python**: 3.11 or newer
 - **Node.js**: 18.0 or newer (with npm)
 - **Hindsight**: Access to Hindsight Cloud or a local Hindsight container
-- **Groq API Key**: Optional (fallback deterministic logic activates if absent)
+- **Groq API Key**: Required for live LLM reasoning (mock services exist separately for automated tests).
 
 ### 2. Clone the Repository
 ```bash
@@ -376,7 +376,7 @@ cp .env.example .env
 
 Start the backend API server:
 ```bash
-uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+uvicorn app.main:app --host 127.0.0.1 --port 8001 --reload
 ```
 
 ### 4. Frontend Setup
@@ -399,7 +399,7 @@ Configure the following variables in `backend/.env`:
 ENVIRONMENT=development
 DEBUG=True
 PROJECT_NAME="WHY"
-PORT=8000
+PORT=8001
 CORS_ORIGINS=["http://localhost:5173", "http://127.0.0.1:5173"]
 
 # Hindsight Persistent Memory Configuration
