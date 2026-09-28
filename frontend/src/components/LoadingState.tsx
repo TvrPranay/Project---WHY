@@ -33,34 +33,35 @@ export const LoadingState: React.FC<LoadingStateProps> = ({ type }) => {
 
   return (
     <div className="panel" style={{
-      padding: '3rem 2rem',
-      maxWidth: '680px',
-      margin: '0 auto 3rem auto',
+      padding: '2.5rem 1.75rem',
+      maxWidth: '640px',
+      margin: '0 auto 2.5rem auto',
       textAlign: 'center',
+      backgroundColor: '#ffffff',
       border: '1px solid var(--border-default)',
     }}>
       <div style={{
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '56px',
-        height: '56px',
-        borderRadius: '16px',
-        backgroundColor: 'rgba(59, 130, 246, 0.12)',
-        border: '1px solid rgba(59, 130, 246, 0.3)',
-        marginBottom: '1.25rem',
+        width: '48px',
+        height: '48px',
+        borderRadius: '10px',
+        backgroundColor: '#eff6ff',
+        border: '1px solid #bfdbfe',
+        marginBottom: '1rem',
       }}>
         {type === 'reconstruct' ? (
-          <Database size={26} style={{ color: '#60a5fa' }} />
+          <Database size={22} style={{ color: 'var(--accent-blue)' }} />
         ) : (
-          <BrainCircuit size={26} style={{ color: '#fbbf24' }} />
+          <BrainCircuit size={22} style={{ color: '#d97706' }} />
         )}
       </div>
 
-      <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem', color: '#ffffff' }}>
+      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
         {type === 'reconstruct' ? 'Reconstructing Decision Memory' : 'Evaluating Temporal Invalidation'}
       </h3>
-      <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '2rem' }}>
+      <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', marginBottom: '1.75rem' }}>
         {type === 'reconstruct'
           ? 'Interrogating Hindsight persistent bank for historical reasoning and constraints...'
           : 'Analyzing organizational shifts across time to identify invalidated assumptions...'}
@@ -70,9 +71,9 @@ export const LoadingState: React.FC<LoadingStateProps> = ({ type }) => {
       <div style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '0.85rem',
+        gap: '0.65rem',
         textAlign: 'left',
-        maxWidth: '460px',
+        maxWidth: '440px',
         margin: '0 auto',
       }}>
         {steps.map((step, idx) => {
@@ -84,32 +85,32 @@ export const LoadingState: React.FC<LoadingStateProps> = ({ type }) => {
               style={{
                 display: 'flex',
                 alignItems: 'flex-start',
-                gap: '0.75rem',
-                padding: '0.75rem 1rem',
-                borderRadius: '8px',
-                backgroundColor: isCurrent ? 'rgba(59, 130, 246, 0.08)' : 'rgba(15, 23, 42, 0.4)',
-                border: isCurrent ? '1px solid rgba(59, 130, 246, 0.3)' : '1px solid var(--border-subtle)',
-                transition: 'all 0.3s ease',
+                gap: '0.65rem',
+                padding: '0.65rem 0.85rem',
+                borderRadius: '6px',
+                backgroundColor: isCurrent ? '#eff6ff' : '#f8fafc',
+                border: `1px solid ${isCurrent ? '#bfdbfe' : 'var(--border-default)'}`,
+                transition: 'all 0.2s ease',
               }}
             >
               <div style={{ marginTop: '0.15rem' }}>
                 {isDone ? (
-                  <CheckCircle2 size={16} style={{ color: '#10b981' }} />
+                  <CheckCircle2 size={15} style={{ color: '#059669' }} />
                 ) : isCurrent ? (
                   <span className="pulsing-dot dot-warning" />
                 ) : (
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#475569', margin: '4px' }} />
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#cbd5e1', margin: '3px' }} />
                 )}
               </div>
               <div>
                 <div style={{
-                  fontSize: '0.85rem',
-                  fontWeight: isCurrent ? 700 : 500,
-                  color: isCurrent ? '#ffffff' : isDone ? 'var(--text-secondary)' : 'var(--text-muted)',
+                  fontSize: '0.82rem',
+                  fontWeight: isCurrent ? 700 : 600,
+                  color: isCurrent ? 'var(--accent-blue)' : isDone ? 'var(--text-primary)' : 'var(--text-muted)',
                 }}>
                   {step.title}
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
                   {step.detail}
                 </div>
               </div>

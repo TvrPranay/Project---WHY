@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { 
-  ArrowRight, 
-  RotateCcw, 
-  Database, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Sparkles, 
-  BrainCircuit, 
-  Check, 
-  Info, 
+import {
+  ArrowRight,
+  RotateCcw,
+  Database,
+  AlertTriangle,
+  CheckCircle2,
+  Sparkles,
+  BrainCircuit,
+  Check,
+  Info,
   X,
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
-import { 
-  DecisionExplanation, 
-  DecisionAssessment, 
-  RememberDecisionResponse, 
-  EvidenceItem 
+import {
+  DecisionExplanation,
+  DecisionAssessment,
+  RememberDecisionResponse,
+  EvidenceItem
 } from '../types/decision';
-import { 
-  reconstructDecision, 
-  assessDecision, 
-  rememberDecision 
+import {
+  reconstructDecision,
+  assessDecision,
+  rememberDecision
 } from '../services/api';
 
 interface GuidedDemoProps {
@@ -30,9 +30,9 @@ interface GuidedDemoProps {
   isHindsightConnected?: boolean;
 }
 
-export const GuidedDemo: React.FC<GuidedDemoProps> = ({ 
-  onExit, 
-  isHindsightConnected = true 
+export const GuidedDemo: React.FC<GuidedDemoProps> = ({
+  onExit,
+  isHindsightConnected = true
 }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -166,11 +166,11 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
         flexWrap: 'wrap',
         gap: '1rem',
         padding: '0.85rem 1.25rem',
-        backgroundColor: 'rgba(15, 23, 42, 0.85)',
+        backgroundColor: 'var(--bg-surface)',
         border: '1px solid var(--border-default)',
-        borderRadius: '12px',
+        borderRadius: '10px',
         marginBottom: '2rem',
-        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+        boxShadow: '0 1px 3px rgba(15, 23, 42, 0.05)',
       }}>
         {/* Left: Badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
@@ -180,13 +180,13 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             gap: '0.35rem',
             padding: '0.2rem 0.55rem',
             borderRadius: '6px',
-            backgroundColor: 'rgba(59, 130, 246, 0.2)',
-            color: '#60a5fa',
+            backgroundColor: 'var(--color-accent-subtle)',
+            color: 'var(--color-accent)',
             fontSize: '0.75rem',
             fontWeight: 700,
             textTransform: 'uppercase',
             letterSpacing: '0.04em',
-            border: '1px solid rgba(59, 130, 246, 0.4)',
+            border: '1px solid var(--color-accent-border)',
           }}>
             <Sparkles size={13} />
             Guided Demo
@@ -225,20 +225,20 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                   gap: '0.35rem',
                   padding: '0.3rem 0.65rem',
                   borderRadius: '6px',
-                  backgroundColor: isActive 
-                    ? 'rgba(59, 130, 246, 0.25)' 
-                    : isCompleted 
-                    ? 'rgba(16, 185, 129, 0.12)' 
+                  backgroundColor: isActive
+                    ? 'var(--color-accent)'
+                    : isCompleted
+                    ? 'rgba(16, 185, 129, 0.1)'
                     : 'transparent',
-                  border: isActive 
-                    ? '1px solid rgba(59, 130, 246, 0.6)' 
-                    : isCompleted 
-                    ? '1px solid rgba(16, 185, 129, 0.3)' 
+                  border: isActive
+                    ? '1px solid var(--color-accent)'
+                    : isCompleted
+                    ? '1px solid rgba(16, 185, 129, 0.3)'
                     : '1px solid transparent',
-                  color: isActive 
-                    ? '#ffffff' 
-                    : isCompleted 
-                    ? '#34d399' 
+                  color: isActive
+                    ? '#ffffff'
+                    : isCompleted
+                    ? '#059669'
                     : 'var(--text-muted)',
                   fontSize: '0.78rem',
                   fontWeight: isActive ? 700 : 500,
@@ -248,7 +248,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               >
                 <span>{s.number}</span>
                 <span>{s.title}</span>
-                {isCompleted && <Check size={12} style={{ color: '#34d399' }} />}
+                {isCompleted && <Check size={12} style={{ color: '#059669' }} />}
               </button>
             );
           })}
@@ -297,12 +297,12 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
         <div className="panel" style={{
           padding: '1.25rem 1.5rem',
           marginBottom: '2rem',
-          backgroundColor: 'rgba(15, 23, 42, 0.8)',
-          border: '1px solid rgba(59, 130, 246, 0.3)',
+          backgroundColor: '#f8fafc',
+          border: '1px solid var(--border-default)',
           borderRadius: '10px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#60a5fa' }}>
+            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-accent)' }}>
               System Configuration & Metadata
             </h4>
             <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Real runtime values</span>
@@ -326,19 +326,19 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             </div>
             <div>
               <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.72rem' }}>PRIMARY EVIDENCE:</span>
-              <span style={{ fontWeight: 600, color: '#ffffff' }}>
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
                 {withHindsightResult?.evidence?.length ?? 'Pending'}
               </span>
             </div>
             <div>
               <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.72rem' }}>PRIOR INVESTIGATIONS:</span>
-              <span style={{ fontWeight: 600, color: '#ffffff' }}>
+              <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
                 {withHindsightResult?.prior_investigations_count ?? 'Pending'}
               </span>
             </div>
             <div>
               <span style={{ color: 'var(--text-muted)', display: 'block', fontSize: '0.72rem' }}>ACTIVE MEMORY MODE:</span>
-              <span style={{ fontFamily: 'var(--font-mono)', color: '#93c5fd' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-accent)' }}>
                 {currentStep === 2 ? 'none' : 'hindsight'}
               </span>
             </div>
@@ -398,20 +398,21 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
           padding: '3.5rem 2rem',
           textAlign: 'center',
           marginBottom: '2.5rem',
-          backgroundColor: 'rgba(15, 23, 42, 0.75)',
-          border: '1px solid rgba(59, 130, 246, 0.35)',
+          backgroundColor: 'var(--bg-surface)',
+          border: '1px solid var(--border-default)',
+          boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
         }}>
           <div style={{
             display: 'inline-block',
             width: '42px',
             height: '42px',
-            border: '3px solid rgba(59, 130, 246, 0.2)',
-            borderTopColor: '#3b82f6',
+            border: '3px solid #e2e8f0',
+            borderTopColor: 'var(--color-accent)',
             borderRadius: '50%',
             animation: 'spin 0.8s linear infinite',
             marginBottom: '1.25rem',
           }} />
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.45rem' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.45rem' }}>
             {loadingMessage}
           </h3>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: '540px', margin: '0 auto' }}>
@@ -433,14 +434,14 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               gap: '0.45rem',
               padding: '0.25rem 0.75rem',
               borderRadius: '20px',
-              backgroundColor: 'rgba(59, 130, 246, 0.12)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              color: '#93c5fd',
+              backgroundColor: 'var(--color-accent-subtle)',
+              border: '1px solid var(--color-accent-border)',
+              color: 'var(--color-accent)',
               fontSize: '0.8rem',
               fontWeight: 600,
               marginBottom: '1rem',
             }}>
-              <BrainCircuit size={14} style={{ color: '#60a5fa' }} />
+              <BrainCircuit size={14} style={{ color: 'var(--color-accent)' }} />
               WHY — Organizational Decision Memory
             </div>
 
@@ -449,9 +450,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               fontWeight: 800,
               lineHeight: 1.25,
               marginBottom: '0.85rem',
-              background: 'linear-gradient(180deg, #ffffff 40%, #94a3b8 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: 'var(--text-primary)',
             }}>
               Start with a question.
             </h1>
@@ -473,18 +472,18 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             maxWidth: '780px',
             margin: '0 auto 2.5rem auto',
             padding: '2rem 2.25rem',
-            border: '1px solid rgba(59, 130, 246, 0.4)',
-            backgroundColor: 'rgba(15, 23, 42, 0.75)',
-            boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)',
+            border: '1px solid var(--border-default)',
+            backgroundColor: 'var(--bg-surface)',
+            boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
           }}>
-            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#60a5fa', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-accent)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Decision Under Investigation
             </div>
 
             <h2 style={{
               fontSize: '1.35rem',
               fontWeight: 700,
-              color: '#ffffff',
+              color: 'var(--text-primary)',
               marginBottom: '1rem',
               lineHeight: 1.4,
             }}>
@@ -525,12 +524,12 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               fontSize: '2.1rem',
               fontWeight: 800,
               marginBottom: '0.65rem',
-              color: '#ffffff',
+              color: 'var(--text-primary)',
             }}>
               What happens without organizational memory?
             </h1>
             <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto' }}>
-              Running the investigation with memory disabled (<code style={{ color: '#93c5fd' }}>memory_mode=&quot;none&quot;</code>) directly demonstrates the limitation of isolated LLMs.
+              Running the investigation with memory disabled (<code style={{ color: 'var(--color-accent)', backgroundColor: '#f1f5f9', padding: '0.1rem 0.35rem', borderRadius: '4px' }}>memory_mode=&quot;none&quot;</code>) directly demonstrates the limitation of isolated LLMs.
             </p>
           </div>
 
@@ -538,8 +537,9 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             maxWidth: '780px',
             margin: '0 auto 2.5rem auto',
             padding: '2rem',
-            border: '1px solid rgba(148, 163, 184, 0.3)',
-            backgroundColor: 'rgba(15, 23, 42, 0.8)',
+            border: '1px solid var(--border-default)',
+            backgroundColor: 'var(--bg-surface)',
+            boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
           }}>
             {/* Header Badge */}
             <div style={{
@@ -567,45 +567,45 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             }}>
               <div style={{
                 padding: '1rem',
-                backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                backgroundColor: '#f8fafc',
                 borderRadius: '8px',
-                border: '1px solid var(--border-subtle)',
+                border: '1px solid var(--border-default)',
                 textAlign: 'center',
               }}>
                 <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                   Evidence Recalled
                 </div>
-                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#94a3b8' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-secondary)' }}>
                   {withoutMemoryResult.evidence?.length ?? 0}
                 </div>
               </div>
 
               <div style={{
                 padding: '1rem',
-                backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                backgroundColor: '#f8fafc',
                 borderRadius: '8px',
-                border: '1px solid var(--border-subtle)',
+                border: '1px solid var(--border-default)',
                 textAlign: 'center',
               }}>
                 <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                   Prior Investigations
                 </div>
-                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#94a3b8' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-secondary)' }}>
                   {withoutMemoryResult.prior_investigations_count ?? 0}
                 </div>
               </div>
 
               <div style={{
                 padding: '1rem',
-                backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                backgroundColor: '#f8fafc',
                 borderRadius: '8px',
-                border: '1px solid var(--border-subtle)',
+                border: '1px solid var(--border-default)',
                 textAlign: 'center',
               }}>
                 <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                   Status
                 </div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#fbbf24', marginTop: '0.45rem' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#b45309', marginTop: '0.45rem' }}>
                   {withoutMemoryResult.status}
                 </div>
               </div>
@@ -613,13 +613,13 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
 
             {/* Message Callout */}
             <div style={{
-              backgroundColor: 'rgba(245, 158, 11, 0.08)',
-              border: '1px solid rgba(245, 158, 11, 0.25)',
+              backgroundColor: '#fffbeb',
+              border: '1px solid #fde68a',
               borderRadius: '8px',
               padding: '1.25rem',
               marginBottom: '2rem',
             }}>
-              <p style={{ fontSize: '0.92rem', color: '#fde68a', lineHeight: 1.6 }}>
+              <p style={{ fontSize: '0.92rem', color: '#92400e', lineHeight: 1.6 }}>
                 <strong>Honest Refusal:</strong> &ldquo;{withoutMemoryResult.summary || 'Without organizational memory, WHY cannot reconstruct the historical decision without inventing facts.'}&rdquo;
               </p>
             </div>
@@ -632,7 +632,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               paddingTop: '1rem',
               borderTop: '1px solid var(--border-subtle)',
             }}>
-              <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#ffffff' }}>
+              <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Now give WHY its memory.
               </span>
               <button
@@ -659,7 +659,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               fontSize: '2.1rem',
               fontWeight: 800,
               marginBottom: '0.65rem',
-              color: '#ffffff',
+              color: 'var(--text-primary)',
             }}>
               Decision Reconstructed with Hindsight
             </h1>
@@ -672,8 +672,9 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             maxWidth: '840px',
             margin: '0 auto 2.5rem auto',
             padding: '2rem',
-            border: '1px solid rgba(59, 130, 246, 0.45)',
-            backgroundColor: 'rgba(15, 23, 42, 0.85)',
+            border: '1px solid var(--border-default)',
+            backgroundColor: 'var(--bg-surface)',
+            boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
           }}>
             {/* Header Badge */}
             <div style={{
@@ -690,7 +691,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                 WITH HINDSIGHT
               </span>
               <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                Bank: <strong style={{ color: '#ffffff', fontFamily: 'var(--font-mono)' }}>finflow-why</strong>
+                Bank: <strong style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>finflow-why</strong>
               </span>
             </div>
 
@@ -703,45 +704,45 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             }}>
               <div style={{
                 padding: '1rem',
-                backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                backgroundColor: '#f8fafc',
                 borderRadius: '8px',
-                border: '1px solid rgba(59, 130, 246, 0.25)',
+                border: '1px solid var(--border-default)',
                 textAlign: 'center',
               }}>
                 <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                   Primary Evidence Recalled
                 </div>
-                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#60a5fa' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-accent)' }}>
                   {withHindsightResult.evidence?.length ?? 0} records
                 </div>
               </div>
 
               <div style={{
                 padding: '1rem',
-                backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                backgroundColor: '#f8fafc',
                 borderRadius: '8px',
-                border: '1px solid rgba(59, 130, 246, 0.25)',
+                border: '1px solid var(--border-default)',
                 textAlign: 'center',
               }}>
                 <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                   Prior Investigations
                 </div>
-                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#c084fc' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#7c3aed' }}>
                   {withHindsightResult.prior_investigations_count ?? 0} memories
                 </div>
               </div>
 
               <div style={{
                 padding: '1rem',
-                backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                backgroundColor: '#f8fafc',
                 borderRadius: '8px',
-                border: '1px solid rgba(59, 130, 246, 0.25)',
+                border: '1px solid var(--border-default)',
                 textAlign: 'center',
               }}>
                 <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                   Reconstruction Status
                 </div>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#34d399', marginTop: '0.45rem' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#059669', marginTop: '0.45rem' }}>
                   {withHindsightResult.status}
                 </div>
               </div>
@@ -750,7 +751,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             {/* Decision Statement */}
             <div style={{
               padding: '1.25rem',
-              backgroundColor: 'rgba(30, 41, 59, 0.5)',
+              backgroundColor: '#f8fafc',
               borderRadius: '8px',
               border: '1px solid var(--border-default)',
               marginBottom: '1.75rem',
@@ -758,7 +759,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
                 Reconstructed Decision
               </div>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                 {withHindsightResult.decision}
               </h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
@@ -768,7 +769,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
 
             {/* Why It Was Chosen */}
             <div style={{ marginBottom: '1.75rem' }}>
-              <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: '#60a5fa', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.85rem' }}>
+              <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.85rem' }}>
                 WHY IT WAS CHOSEN
               </h4>
 
@@ -779,9 +780,9 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                       key={idx}
                       style={{
                         padding: '1rem',
-                        backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                        backgroundColor: '#f8fafc',
                         borderRadius: '8px',
-                        border: '1px solid var(--border-subtle)',
+                        border: '1px solid var(--border-default)',
                         display: 'flex',
                         alignItems: 'flex-start',
                         justifyContent: 'space-between',
@@ -789,7 +790,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                       }}
                     >
                       <div>
-                        <div style={{ fontWeight: 600, color: '#ffffff', fontSize: '0.9rem', marginBottom: '0.35rem' }}>
+                        <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem', marginBottom: '0.35rem' }}>
                           Reason {idx + 1}: {r.reason}
                         </div>
                       </div>
@@ -814,8 +815,8 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
 
             {/* Explanatory Callout (Product truth, no fake claims) */}
             <div style={{
-              backgroundColor: 'rgba(59, 130, 246, 0.08)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
+              backgroundColor: '#eff6ff',
+              border: '1px solid #bfdbfe',
               borderRadius: '8px',
               padding: '1rem 1.25rem',
               marginBottom: '2rem',
@@ -823,8 +824,8 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               alignItems: 'center',
               gap: '0.75rem',
             }}>
-              <Info size={18} style={{ color: '#60a5fa', flexShrink: 0 }} />
-              <p style={{ fontSize: '0.86rem', color: '#93c5fd', lineHeight: 1.5, margin: 0 }}>
+              <Info size={18} style={{ color: 'var(--color-accent)', flexShrink: 0 }} />
+              <p style={{ fontSize: '0.86rem', color: '#1e40af', lineHeight: 1.5, margin: 0 }}>
                 Hindsight gives WHY persistent organizational context that cannot be recovered from the current conversation alone.
               </p>
             </div>
@@ -869,9 +870,9 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               gap: '0.35rem',
               padding: '0.2rem 0.65rem',
               borderRadius: '20px',
-              backgroundColor: 'rgba(245, 158, 11, 0.15)',
-              border: '1px solid rgba(245, 158, 11, 0.35)',
-              color: '#fbbf24',
+              backgroundColor: '#fffbeb',
+              border: '1px solid #fde68a',
+              color: '#92400e',
               fontSize: '0.78rem',
               fontWeight: 700,
               textTransform: 'uppercase',
@@ -887,7 +888,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               fontWeight: 800,
               lineHeight: 1.25,
               marginBottom: '0.75rem',
-              color: '#ffffff',
+              color: 'var(--text-primary)',
             }}>
               The decision stayed. The assumptions changed.
             </h1>
@@ -901,8 +902,9 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
           <div className="panel" style={{
             padding: '1.25rem 1.5rem',
             marginBottom: '2rem',
-            backgroundColor: 'rgba(15, 23, 42, 0.7)',
+            backgroundColor: 'var(--bg-surface)',
             border: '1px solid var(--border-default)',
+            boxShadow: '0 1px 3px rgba(15, 23, 42, 0.05)',
           }}>
             <div style={{
               display: 'flex',
@@ -913,10 +915,10 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               textAlign: 'center',
             }}>
               <div style={{ flex: 1, minWidth: '130px' }}>
-                <div style={{ fontSize: '0.72rem', color: '#60a5fa', fontWeight: 700, textTransform: 'uppercase' }}>
+                <div style={{ fontSize: '0.72rem', color: 'var(--color-accent)', fontWeight: 700, textTransform: 'uppercase' }}>
                   2024
                 </div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#ffffff' }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Decision made
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -927,10 +929,10 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               <span style={{ color: 'var(--text-muted)' }}>&rarr;</span>
 
               <div style={{ flex: 1, minWidth: '130px' }}>
-                <div style={{ fontSize: '0.72rem', color: '#fbbf24', fontWeight: 700, textTransform: 'uppercase' }}>
+                <div style={{ fontSize: '0.72rem', color: '#b45309', fontWeight: 700, textTransform: 'uppercase' }}>
                   2025
                 </div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#ffffff' }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Operational friction
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -941,10 +943,10 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               <span style={{ color: 'var(--text-muted)' }}>&rarr;</span>
 
               <div style={{ flex: 1, minWidth: '130px' }}>
-                <div style={{ fontSize: '0.72rem', color: '#c084fc', fontWeight: 700, textTransform: 'uppercase' }}>
+                <div style={{ fontSize: '0.72rem', color: '#7c3aed', fontWeight: 700, textTransform: 'uppercase' }}>
                   2026
                 </div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: '#ffffff' }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   New evidence
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -955,10 +957,10 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               <span style={{ color: 'var(--text-muted)' }}>&rarr;</span>
 
               <div style={{ flex: 1, minWidth: '140px' }}>
-                <div style={{ fontSize: '0.72rem', color: '#f87171', fontWeight: 700, textTransform: 'uppercase' }}>
+                <div style={{ fontSize: '0.72rem', color: '#dc2626', fontWeight: 700, textTransform: 'uppercase' }}>
                   Result
                 </div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#fbbf24' }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#b45309' }}>
                   {assessmentResult.status.replace('_', ' ')}
                 </div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -972,10 +974,10 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
           <div style={{
             padding: '1.75rem 2rem',
             borderRadius: '12px',
-            backgroundColor: assessmentResult.status === 'REVIEW REQUIRED' 
-              ? 'rgba(245, 158, 11, 0.14)' 
-              : 'rgba(59, 130, 246, 0.14)',
-            border: `1px solid ${assessmentResult.status === 'REVIEW REQUIRED' ? 'rgba(245, 158, 11, 0.45)' : 'rgba(59, 130, 246, 0.45)'}`,
+            backgroundColor: assessmentResult.status === 'REVIEW REQUIRED'
+              ? '#fffbeb'
+              : '#eff6ff',
+            border: `1px solid ${assessmentResult.status === 'REVIEW REQUIRED' ? '#fde68a' : '#bfdbfe'}`,
             marginBottom: '2.5rem',
             textAlign: 'center',
           }}>
@@ -985,7 +987,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               gap: '0.6rem',
               fontSize: '1.5rem',
               fontWeight: 800,
-              color: assessmentResult.status === 'REVIEW REQUIRED' ? '#fbbf24' : '#60a5fa',
+              color: assessmentResult.status === 'REVIEW REQUIRED' ? '#92400e' : 'var(--color-accent)',
               marginBottom: '0.5rem',
             }}>
               <AlertTriangle size={26} />
@@ -993,20 +995,20 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             </div>
             <p style={{
               fontSize: '1rem',
-              color: '#ffffff',
+              color: 'var(--text-primary)',
               maxWidth: '680px',
               margin: '0 auto',
               lineHeight: 1.6,
             }}>
-              {assessmentResult.status === 'REVIEW REQUIRED' 
-                ? 'Historical reasoning that once justified this decision has materially changed.' 
+              {assessmentResult.status === 'REVIEW REQUIRED'
+                ? 'Historical reasoning that once justified this decision has materially changed.'
                 : assessmentResult.impact_summary}
             </p>
           </div>
 
           {/* Reason Comparisons (Rendered strictly from backend response) */}
           <div style={{ marginBottom: '2.5rem' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff', marginBottom: '1.25rem' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.25rem' }}>
               Changed Assumptions Breakdown
             </h3>
 
@@ -1018,7 +1020,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                     className="panel"
                     style={{
                       padding: '1.5rem',
-                      backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                      backgroundColor: 'var(--bg-surface)',
                       border: '1px solid var(--border-default)',
                     }}
                   >
@@ -1026,14 +1028,14 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                       {/* Left: Original Reason */}
                       <div style={{
                         padding: '1rem',
-                        backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                        backgroundColor: '#f8fafc',
                         borderRadius: '8px',
-                        border: '1px solid var(--border-subtle)',
+                        border: '1px solid var(--border-default)',
                       }}>
                         <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
                           ORIGINAL ASSUMPTION
                         </div>
-                        <p style={{ fontSize: '0.88rem', color: '#ffffff', lineHeight: 1.5, marginBottom: '0.5rem' }}>
+                        <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '0.5rem' }}>
                           {item.original_reason}
                         </p>
                         {item.original_evidence_ids && (
@@ -1050,14 +1052,14 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                       {/* Right: New Assessment / Evidence */}
                       <div style={{
                         padding: '1rem',
-                        backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                        backgroundColor: '#fffbeb',
                         borderRadius: '8px',
-                        border: '1px solid rgba(245, 158, 11, 0.25)',
+                        border: '1px solid #fde68a',
                       }}>
-                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fbbf24', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#92400e', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
                           NEW EVIDENCE
                         </div>
-                        <p style={{ fontSize: '0.88rem', color: '#ffffff', lineHeight: 1.5, marginBottom: '0.5rem' }}>
+                        <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '0.5rem' }}>
                           {item.assessment}
                         </p>
                         {item.new_evidence_ids && (
@@ -1088,7 +1090,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                           {item.current_support}
                         </span>
                         {item.impact && (
-                          <span className="badge badge-subtle" style={{ color: '#fbbf24', borderColor: 'rgba(245, 158, 11, 0.3)' }}>
+                          <span className="badge badge-subtle" style={{ color: '#b45309', borderColor: '#fde68a' }}>
                             {item.impact} IMPACT
                           </span>
                         )}
@@ -1107,10 +1109,11 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
           {/* Evidence Trail ("Why does WHY believe this?") */}
           <div className="panel" style={{
             padding: '1.75rem',
-            backgroundColor: 'rgba(15, 23, 42, 0.75)',
+            backgroundColor: 'var(--bg-surface)',
+            border: '1px solid var(--border-default)',
             marginBottom: '2.5rem',
           }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.45rem' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.45rem' }}>
               Why does WHY believe this?
             </h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
@@ -1123,7 +1126,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                 <div style={{
                   fontSize: '0.75rem',
                   fontWeight: 700,
-                  color: '#60a5fa',
+                  color: 'var(--color-accent)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
                   marginBottom: '0.75rem',
@@ -1136,14 +1139,14 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                       key={i}
                       style={{
                         padding: '0.75rem 1rem',
-                        backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                        backgroundColor: '#f8fafc',
                         borderRadius: '6px',
-                        border: '1px solid var(--border-subtle)',
+                        border: '1px solid var(--border-default)',
                         fontSize: '0.82rem',
                       }}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.2rem' }}>
-                        <strong style={{ color: '#ffffff' }}>{item.title}</strong>
+                        <strong style={{ color: 'var(--text-primary)' }}>{item.title}</strong>
                         <span className="badge badge-evidence">{item.source_type}</span>
                       </div>
                       <p style={{ color: 'var(--text-secondary)', fontSize: '0.78rem', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -1159,7 +1162,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                 <div style={{
                   fontSize: '0.75rem',
                   fontWeight: 700,
-                  color: '#c084fc',
+                  color: '#7c3aed',
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
                   marginBottom: '0.75rem',
@@ -1169,19 +1172,19 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
 
                 <div style={{
                   padding: '1rem',
-                  backgroundColor: 'rgba(88, 28, 135, 0.1)',
+                  backgroundColor: '#faf5ff',
                   borderRadius: '6px',
-                  border: '1px solid rgba(192, 132, 252, 0.3)',
+                  border: '1px solid #e9d5ff',
                   fontSize: '0.82rem',
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#c084fc', fontWeight: 600, marginBottom: '0.4rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#7c3aed', fontWeight: 600, marginBottom: '0.4rem' }}>
                     <BrainCircuit size={15} />
                     <span>Prior Investigation Memories</span>
                   </div>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.78rem', lineHeight: 1.5, marginBottom: '0.5rem' }}>
                     WHY recalls previous investigation summaries as institutional context. Primary organizational evidence always supersedes prior AI reasoning.
                   </p>
-                  <span className="badge badge-subtle" style={{ color: '#c084fc', borderColor: 'rgba(192, 132, 252, 0.3)' }}>
+                  <span className="badge badge-subtle" style={{ color: '#7c3aed', borderColor: '#e9d5ff' }}>
                     Epistemic Hierarchy Active
                   </span>
                 </div>
@@ -1216,9 +1219,9 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               gap: '0.35rem',
               padding: '0.2rem 0.65rem',
               borderRadius: '20px',
-              backgroundColor: 'rgba(16, 185, 129, 0.12)',
-              border: '1px solid rgba(16, 185, 129, 0.35)',
-              color: '#34d399',
+              backgroundColor: '#ecfdf5',
+              border: '1px solid #a7f3d0',
+              color: '#065f46',
               fontSize: '0.78rem',
               fontWeight: 700,
               textTransform: 'uppercase',
@@ -1234,7 +1237,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               fontWeight: 800,
               lineHeight: 1.25,
               marginBottom: '0.75rem',
-              color: '#ffffff',
+              color: 'var(--text-primary)',
             }}>
               Now WHY remembers.
             </h1>
@@ -1249,16 +1252,17 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             maxWidth: '780px',
             margin: '0 auto 2.5rem auto',
             padding: '2rem 2.25rem',
-            border: '1px solid rgba(16, 185, 129, 0.35)',
-            backgroundColor: 'rgba(15, 23, 42, 0.85)',
+            border: '1px solid var(--border-default)',
+            backgroundColor: 'var(--bg-surface)',
+            boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
           }}>
             {!rememberResult ? (
               <div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                   Retain Investigation Reasoning
                 </h3>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.75rem', lineHeight: 1.6 }}>
-                  Store this full investigation &mdash; the original decision, reconstructed reasons, invalidated assumptions, and review status &mdash; into Hindsight Cloud bank <strong style={{ color: '#ffffff' }}>finflow-why</strong>.
+                  Store this full investigation &mdash; the original decision, reconstructed reasons, invalidated assumptions, and review status &mdash; into Hindsight Cloud bank <strong style={{ color: 'var(--text-primary)' }}>finflow-why</strong>.
                 </p>
 
                 <button
@@ -1269,8 +1273,9 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                   style={{
                     padding: '0.75rem 1.6rem',
                     fontSize: '0.92rem',
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                    borderColor: '#10b981',
+                    backgroundColor: '#059669',
+                    borderColor: '#059669',
+                    color: '#ffffff',
                   }}
                 >
                   {isRemembering ? (
@@ -1289,7 +1294,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.65rem',
-                  color: '#34d399',
+                  color: '#059669',
                   fontSize: '1.25rem',
                   fontWeight: 800,
                   marginBottom: '0.75rem',
@@ -1298,29 +1303,29 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
                   <span>&check; REMEMBERED IN HINDSIGHT</span>
                 </div>
 
-                <p style={{ fontSize: '0.95rem', color: '#ffffff', marginBottom: '1.25rem', lineHeight: 1.6 }}>
+                <p style={{ fontSize: '0.95rem', color: 'var(--text-primary)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
                   Future investigations can recall this reasoning as prior AI context.
                 </p>
 
                 <div style={{
                   padding: '1rem',
-                  backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                  backgroundColor: '#f8fafc',
                   borderRadius: '8px',
-                  border: '1px solid var(--border-subtle)',
+                  border: '1px solid var(--border-default)',
                   fontSize: '0.82rem',
                   marginBottom: '1.5rem',
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
                     <span style={{ color: 'var(--text-muted)' }}>DOCUMENT ID:</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: '#34d399' }}>{rememberResult.document_id}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', color: '#059669' }}>{rememberResult.document_id}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
                     <span style={{ color: 'var(--text-muted)' }}>MEMORY TYPE:</span>
-                    <span style={{ color: '#ffffff' }}>decision_investigation</span>
+                    <span style={{ color: 'var(--text-primary)' }}>decision_investigation</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--text-muted)' }}>CLASSIFICATION:</span>
-                    <span className="badge badge-subtle" style={{ color: '#c084fc', borderColor: 'rgba(192, 132, 252, 0.3)' }}>
+                    <span className="badge badge-subtle" style={{ color: '#7c3aed', borderColor: '#e9d5ff' }}>
                       PRIOR AI REASONING (NON-AUTHORITATIVE)
                     </span>
                   </div>
@@ -1334,7 +1339,7 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
             maxWidth: '780px',
             margin: '0 auto 2.5rem auto',
             padding: '2rem',
-            backgroundColor: 'rgba(10, 15, 29, 0.85)',
+            backgroundColor: '#f8fafc',
             border: '1px solid var(--border-default)',
             textAlign: 'center',
           }}>
@@ -1350,27 +1355,27 @@ export const GuidedDemo: React.FC<GuidedDemoProps> = ({
               fontFamily: 'var(--font-mono)',
               fontSize: '0.85rem',
               fontWeight: 600,
-              color: '#93c5fd',
+              color: 'var(--color-accent)',
               marginBottom: '1.5rem',
             }}>
-              <span style={{ color: '#60a5fa' }}>ORGANIZATIONAL EVIDENCE</span>
+              <span style={{ color: 'var(--color-accent)' }}>ORGANIZATIONAL EVIDENCE</span>
               <span style={{ color: 'var(--text-muted)' }}>&darr;</span>
-              <span style={{ color: '#34d399' }}>HINDSIGHT</span>
+              <span style={{ color: '#059669' }}>HINDSIGHT</span>
               <span style={{ color: 'var(--text-muted)' }}>&darr;</span>
-              <span style={{ color: '#ffffff' }}>DECISION RECONSTRUCTION</span>
+              <span style={{ color: 'var(--text-primary)' }}>DECISION RECONSTRUCTION</span>
               <span style={{ color: 'var(--text-muted)' }}>&darr;</span>
-              <span style={{ color: '#fbbf24' }}>TEMPORAL REASONING</span>
+              <span style={{ color: '#b45309' }}>TEMPORAL REASONING</span>
               <span style={{ color: 'var(--text-muted)' }}>&darr;</span>
-              <span style={{ color: '#c084fc' }}>DECISION MEMORY</span>
+              <span style={{ color: '#7c3aed' }}>DECISION MEMORY</span>
               <span style={{ color: 'var(--text-muted)' }}>&darr;</span>
-              <span style={{ color: '#34d399' }}>HINDSIGHT</span>
-              <span style={{ color: '#60a5fa', fontSize: '1.1rem' }}>&circlearrowleft;</span>
+              <span style={{ color: '#059669' }}>HINDSIGHT</span>
+              <span style={{ color: 'var(--color-accent)', fontSize: '1.1rem' }}>&circlearrowleft;</span>
             </div>
 
             <p style={{
               fontSize: '1rem',
               fontWeight: 600,
-              color: '#ffffff',
+              color: 'var(--text-primary)',
               lineHeight: 1.5,
               maxWidth: '520px',
               margin: '0 auto',

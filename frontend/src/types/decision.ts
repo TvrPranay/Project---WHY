@@ -18,8 +18,10 @@ export interface EvidenceItem {
   content: string;
   author?: string | null;
   recorded_at?: string | null;
+  timestamp?: string | null;
   external_url?: string | null;
   confidence_score?: number | null;
+  relevance_rationale?: string | null;
 }
 
 export interface DecisionReason {

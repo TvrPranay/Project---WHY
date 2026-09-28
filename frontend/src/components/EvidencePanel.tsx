@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  FileText, 
-  ChevronDown, 
-  ChevronUp, 
-  Calendar, 
-  User, 
-  Search 
+import {
+  FileText,
+  ChevronDown,
+  ChevronUp,
+  Calendar,
+  User,
+  Search
 } from 'lucide-react';
 import { EvidenceItem } from '../types/decision';
 
@@ -63,39 +63,39 @@ export const EvidencePanel: React.FC<EvidencePanelProps> = ({
   });
 
   return (
-    <div className="panel" style={{ padding: '1.75rem', marginBottom: '2.5rem' }} id="evidence-trail">
+    <div className="panel" style={{ padding: '1.5rem', marginBottom: '2.5rem' }} id="evidence-trail">
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '1rem',
-        marginBottom: '1.25rem',
+        marginBottom: '1rem',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <FileText size={20} style={{ color: '#60a5fa' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <FileText size={18} style={{ color: 'var(--accent-blue)' }} />
           <div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
               Organizational Evidence Trail
             </h3>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
               Verified historical memory artifacts retrieved from Hindsight persistent bank
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
           {/* Search box */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            backgroundColor: 'rgba(15, 23, 42, 0.8)',
-            border: '1px solid var(--border-subtle)',
+            backgroundColor: '#ffffff',
+            border: '1px solid var(--border-strong)',
             borderRadius: '6px',
-            padding: '0.25rem 0.6rem',
+            padding: '0.25rem 0.55rem',
             gap: '0.4rem',
           }}>
-            <Search size={13} style={{ color: '#64748b' }} />
+            <Search size={13} style={{ color: 'var(--text-muted)' }} />
             <input
               type="text"
               value={searchQuery}
@@ -107,142 +107,152 @@ export const EvidencePanel: React.FC<EvidencePanelProps> = ({
                 outline: 'none',
                 color: 'var(--text-primary)',
                 fontSize: '0.78rem',
-                width: '130px',
+                width: '140px',
               }}
             />
           </div>
 
-          {/* Source Filter chips */}
-          <div style={{ display: 'flex', gap: '0.3rem' }}>
+          {/* Filter pills */}
+          <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap' }}>
             {sourceTypes.map((type) => (
               <button
                 key={type}
+                type="button"
                 onClick={() => setFilterType(type)}
-                className={`chip ${filterType === type ? 'active' : ''}`}
-                style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem' }}
+                style={{
+                  fontSize: '0.7rem',
+                  fontWeight: 600,
+                  padding: '0.2rem 0.55rem',
+                  borderRadius: '4px',
+                  backgroundColor: filterType === type ? '#eff6ff' : '#f8fafc',
+                  border: `1px solid ${filterType === type ? '#bfdbfe' : 'var(--border-default)'}`,
+                  color: filterType === type ? 'var(--accent-blue)' : 'var(--text-secondary)',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                }}
               >
                 {type}
               </button>
             ))}
           </div>
-
-          <span className="badge badge-subtle">
-            {filteredEvidence.length} {filteredEvidence.length === 1 ? 'record' : 'records'}
-          </span>
         </div>
       </div>
 
       {/* Evidence items list */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
         {filteredEvidence.map((item, idx) => {
-          const isSelected = selectedDocId && item.title?.toLowerCase().includes(selectedDocId.toLowerCase());
-          const isExpanded = expandedIndices[idx] || isSelected;
+          const isSelected = selectedDocId && item.title.includes(selectedDocId);
+          const isExpanded = expandedIndices[idx];
 
           return (
             <div
               key={idx}
               style={{
-                backgroundColor: isSelected ? 'rgba(59, 130, 246, 0.08)' : 'rgba(15, 23, 42, 0.65)',
-                border: isSelected ? '1px solid #3b82f6' : '1px solid var(--border-subtle)',
-                borderRadius: '8px',
-                padding: '1rem 1.25rem',
-                transition: 'all 0.2s ease',
+                backgroundColor: isSelected ? '#eff6ff' : '#f8fafc',
+                border: `1px solid ${isSelected ? 'var(--accent-blue)' : 'var(--border-default)'}`,
+                borderRadius: '6px',
+                padding: '0.85rem 1rem',
+                transition: 'all 0.15s ease',
               }}
             >
               <div
+                onClick={() => toggleExpand(idx)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   cursor: 'pointer',
-                  userSelect: 'none',
+                  gap: '0.75rem',
                 }}
-                onClick={() => toggleExpand(idx)}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', flex: 1, flexWrap: 'wrap' }}>
                   {getSourceBadge(item.source_type)}
-                  <span style={{
-                    fontSize: '0.92rem',
-                    fontWeight: 600,
-                    color: isSelected ? '#60a5fa' : 'var(--text-primary)',
-                  }}>
+                  <span style={{ fontWeight: 600, fontSize: '0.84rem', color: 'var(--text-primary)' }}>
                     {item.title}
                   </span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  {item.recorded_at && (
+                  {(item.recorded_at || item.timestamp) && (
                     <span style={{
-                      fontSize: '0.75rem',
-                      color: 'var(--text-muted)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.3rem',
+                      gap: '0.25rem',
+                      fontSize: '0.72rem',
+                      color: 'var(--text-muted)',
                       fontFamily: 'var(--font-mono)',
                     }}>
-                      <Calendar size={12} />
-                      {item.recorded_at.split('T')[0]}
+                      <Calendar size={11} />
+                      {(item.recorded_at || item.timestamp)?.split('T')[0]}
                     </span>
                   )}
                   {item.author && (
                     <span style={{
-                      fontSize: '0.75rem',
-                      color: 'var(--text-muted)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.3rem',
+                      gap: '0.25rem',
+                      fontSize: '0.72rem',
+                      color: 'var(--text-muted)',
                     }}>
-                      <User size={12} />
+                      <User size={11} />
                       {item.author}
                     </span>
                   )}
-                  <button
-                    type="button"
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--text-muted)',
-                      cursor: 'pointer',
-                      padding: '0.2rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                  </button>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-muted)' }}>
+                  <span style={{ fontSize: '0.72rem' }}>{isExpanded ? 'Collapse' : 'Inspect'}</span>
+                  {isExpanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                 </div>
               </div>
 
-              {/* Collapsed snippet or expanded full content */}
-              <div style={{ marginTop: '0.75rem' }}>
-                {isExpanded ? (
+              {/* Preview Content */}
+              {!isExpanded && item.content && (
+                <div style={{
+                  fontSize: '0.8rem',
+                  color: 'var(--text-secondary)',
+                  marginTop: '0.45rem',
+                  lineHeight: 1.45,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {item.content}
+                </div>
+              )}
+
+              {/* Expanded Detailed View */}
+              {isExpanded && (
+                <div style={{
+                  marginTop: '0.75rem',
+                  paddingTop: '0.75rem',
+                  borderTop: '1px solid var(--border-default)',
+                  fontSize: '0.82rem',
+                  color: 'var(--text-primary)',
+                  lineHeight: 1.55,
+                }}>
                   <div style={{
-                    fontSize: '0.85rem',
-                    color: 'var(--text-secondary)',
-                    lineHeight: 1.6,
-                    padding: '0.85rem 1rem',
-                    backgroundColor: 'rgba(10, 15, 29, 0.7)',
-                    borderRadius: '6px',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: '4px',
+                    padding: '0.75rem',
+                    fontFamily: item.source_type === 'slack' ? 'inherit' : 'var(--font-mono)',
+                    fontSize: '0.78rem',
                     whiteSpace: 'pre-wrap',
-                    fontFamily: item.source_type.includes('SLACK') || item.source_type.includes('ADR') ? 'inherit' : 'var(--font-mono)',
+                    color: 'var(--text-secondary)',
                   }}>
                     {item.content}
                   </div>
-                ) : (
-                  <p style={{
-                    fontSize: '0.82rem',
-                    color: 'var(--text-muted)',
-                    lineHeight: 1.45,
-                    margin: 0,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}>
-                    {item.content}
-                  </p>
-                )}
-              </div>
+
+                  {item.relevance_rationale && (
+                    <div style={{
+                      marginTop: '0.5rem',
+                      fontSize: '0.75rem',
+                      color: 'var(--text-muted)',
+                      fontStyle: 'italic',
+                    }}>
+                      Relevance: {item.relevance_rationale}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}

@@ -1,8 +1,8 @@
 import React from 'react';
-import { 
-  ArrowRight, 
-  Database, 
-  HelpCircle, 
+import {
+  ArrowRight,
+  Database,
+  HelpCircle,
   Sparkles,
   X
 } from 'lucide-react';
@@ -25,10 +25,10 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
     <div style={{ marginBottom: '3rem' }}>
       {/* Top Banner / Heading */}
       <div className="panel" style={{
-        padding: '1.75rem 2rem',
-        marginBottom: '2rem',
-        background: 'linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%)',
-        border: '1px solid rgba(59, 130, 246, 0.35)',
+        padding: '1.5rem 1.75rem',
+        marginBottom: '1.75rem',
+        backgroundColor: '#ffffff',
+        border: '1px solid var(--border-default)',
         position: 'relative',
       }}>
         <div style={{
@@ -42,25 +42,25 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.2rem 0.6rem',
-              borderRadius: '12px',
-              backgroundColor: 'rgba(59, 130, 246, 0.15)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              color: '#60a5fa',
-              fontSize: '0.72rem',
+              gap: '0.35rem',
+              padding: '0.15rem 0.55rem',
+              borderRadius: '4px',
+              backgroundColor: '#eff6ff',
+              border: '1px solid #bfdbfe',
+              color: 'var(--accent-blue)',
+              fontSize: '0.7rem',
               fontWeight: 700,
               textTransform: 'uppercase',
               letterSpacing: '0.04em',
-              marginBottom: '0.65rem',
+              marginBottom: '0.5rem',
             }}>
-              <Sparkles size={12} />
+              <Sparkles size={11} />
               Controlled Memory Demonstration
             </div>
-            <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.025em', margin: 0 }}>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: 0 }}>
               Why Memory Matters
             </h2>
-            <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', marginTop: '0.35rem', marginBottom: 0 }}>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginTop: '0.25rem', marginBottom: 0 }}>
               The same question, investigated with and without persistent organizational memory.
             </p>
           </div>
@@ -68,21 +68,21 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
           <button
             onClick={onClose}
             className="btn btn-secondary"
-            style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ fontSize: '0.78rem', padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
           >
-            <X size={14} />
+            <X size={13} />
             <span>Close Comparison</span>
           </button>
         </div>
 
         {/* Investigated Question Quote */}
         <div style={{
-          marginTop: '1.25rem',
-          padding: '0.75rem 1rem',
-          backgroundColor: 'rgba(10, 15, 29, 0.7)',
-          borderRadius: '8px',
-          border: '1px solid var(--border-subtle)',
-          fontSize: '0.88rem',
+          marginTop: '1rem',
+          padding: '0.65rem 0.85rem',
+          backgroundColor: '#f8fafc',
+          borderRadius: '6px',
+          border: '1px solid var(--border-default)',
+          fontSize: '0.84rem',
           color: 'var(--text-primary)',
           fontFamily: 'var(--font-mono)',
         }}>
@@ -92,12 +92,12 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
       </div>
 
       {/* Side-by-Side Comparison Grid */}
-      <div className="grid-two" style={{ gap: '1.75rem', marginBottom: '2.5rem' }}>
+      <div className="grid-two" style={{ gap: '1.5rem', marginBottom: '2rem' }}>
         {/* LEFT PANEL: WITHOUT HINDSIGHT */}
         <div className="panel" style={{
-          padding: '1.75rem',
-          backgroundColor: 'rgba(15, 23, 42, 0.65)',
-          border: '1px solid rgba(148, 163, 184, 0.25)',
+          padding: '1.5rem',
+          backgroundColor: '#f8fafc',
+          border: '1px solid var(--border-default)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
@@ -108,13 +108,13 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '1rem',
-              paddingBottom: '0.75rem',
-              borderBottom: '1px solid var(--border-subtle)',
+              marginBottom: '0.85rem',
+              paddingBottom: '0.65rem',
+              borderBottom: '1px solid var(--border-default)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <HelpCircle size={18} style={{ color: '#94a3b8' }} />
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-muted)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                <HelpCircle size={17} style={{ color: 'var(--text-muted)' }} />
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-secondary)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   WITHOUT HINDSIGHT
                 </h3>
               </div>
@@ -128,71 +128,76 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
               gap: '0.5rem',
-              padding: '0.75rem',
-              backgroundColor: 'rgba(10, 15, 29, 0.5)',
+              padding: '0.65rem',
+              backgroundColor: '#ffffff',
               borderRadius: '6px',
-              border: '1px solid var(--border-subtle)',
-              marginBottom: '1.25rem',
+              border: '1px solid var(--border-default)',
+              marginBottom: '1rem',
               textAlign: 'center',
             }}>
               <div>
-                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Evidence</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#94a3b8' }}>0</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Evidence Recalled</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-muted)' }}>{without_memory.evidence_count}</div>
               </div>
               <div>
                 <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Prior Investigations</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#94a3b8' }}>0</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-muted)' }}>{without_memory.prior_investigations_count}</div>
               </div>
               <div>
-                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Citations</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#94a3b8' }}>0</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Verified Citations</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-muted)' }}>{without_memory.citation_count}</div>
               </div>
             </div>
 
-            {/* Explanation / Narrative */}
+            {/* Decision Statement */}
+            <div style={{ marginBottom: '0.85rem' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
+                Reconstruction Result:
+              </div>
+              <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                {without_memory.explanation.decision}
+              </div>
+            </div>
+
+            {/* Summary / Refusal Rationale */}
             <div style={{
-              padding: '1rem',
-              backgroundColor: 'rgba(30, 41, 59, 0.3)',
-              borderRadius: '8px',
-              border: '1px dashed rgba(148, 163, 184, 0.3)',
-              marginBottom: '1.25rem',
+              padding: '0.85rem',
+              backgroundColor: '#ffffff',
+              borderRadius: '6px',
+              border: '1px solid var(--border-default)',
+              marginBottom: '1rem',
+              fontSize: '0.82rem',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.5,
             }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.4rem' }}>
-                Investigation Outcome:
-              </div>
-              <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
-                {without_memory.explanation.summary}
-              </p>
+              {without_memory.explanation.summary}
             </div>
 
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-              Without organizational memory, the AI agent has no record of the French CB license requirements, 
-              German Girocard certifications, or Apex Retail ISO 8583 settlement dependencies that took place in 2024. 
-              It cannot reconstruct the decision without fabricating or hallucinating history.
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.45 }}>
+              Without organizational memory, the AI agent has no record of the French CB license requirements,
+              German Girocard certifications, or Apex Retail ISO 8583 settlement dependencies that took place in 2024.
             </div>
           </div>
 
           <div style={{
-            marginTop: '1.5rem',
-            paddingTop: '0.85rem',
-            borderTop: '1px solid var(--border-subtle)',
-            fontSize: '0.75rem',
+            marginTop: '1.25rem',
+            paddingTop: '0.75rem',
+            borderTop: '1px solid var(--border-default)',
+            fontSize: '0.74rem',
             color: 'var(--text-muted)',
-            fontStyle: 'italic',
           }}>
-            Epistemic boundary: System honestly reports lack of evidence rather than generating unverified assumptions.
+            Status: <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>Honest Refusal (Zero Hallucination)</span>
           </div>
         </div>
 
         {/* RIGHT PANEL: WITH HINDSIGHT */}
         <div className="panel" style={{
-          padding: '1.75rem',
-          backgroundColor: 'rgba(15, 23, 42, 0.85)',
-          border: '1px solid rgba(59, 130, 246, 0.4)',
+          padding: '1.5rem',
+          backgroundColor: '#ffffff',
+          border: '1px solid #bfdbfe',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          boxShadow: '0 4px 20px rgba(59, 130, 246, 0.08)',
         }}>
           <div>
             {/* Header */}
@@ -200,13 +205,13 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '1rem',
-              paddingBottom: '0.75rem',
-              borderBottom: '1px solid var(--border-subtle)',
+              marginBottom: '0.85rem',
+              paddingBottom: '0.65rem',
+              borderBottom: '1px solid var(--border-default)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Database size={18} style={{ color: '#60a5fa' }} />
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', margin: 0, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                <Database size={17} style={{ color: 'var(--accent-blue)' }} />
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--accent-blue)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   WITH HINDSIGHT MEMORY
                 </h3>
               </div>
@@ -220,56 +225,56 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
               gap: '0.5rem',
-              padding: '0.75rem',
-              backgroundColor: 'rgba(10, 15, 29, 0.7)',
+              padding: '0.65rem',
+              backgroundColor: '#f8fafc',
               borderRadius: '6px',
-              border: '1px solid rgba(59, 130, 246, 0.25)',
-              marginBottom: '1.25rem',
+              border: '1px solid var(--border-default)',
+              marginBottom: '1rem',
               textAlign: 'center',
             }}>
               <div>
                 <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Evidence Recalled</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#60a5fa' }}>{with_hindsight.evidence_count}</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-blue)' }}>{with_hindsight.evidence_count}</div>
               </div>
               <div>
                 <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Prior Investigations</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#fbbf24' }}>{with_hindsight.prior_investigations_count}</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: '#92400e' }}>{with_hindsight.prior_investigations_count}</div>
               </div>
               <div>
                 <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Verified Citations</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#34d399' }}>{with_hindsight.citation_count}</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: '#065f46' }}>{with_hindsight.citation_count}</div>
               </div>
             </div>
 
             {/* Decision Statement */}
-            <div style={{ marginBottom: '1rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: '#60a5fa', marginBottom: '0.35rem' }}>
+            <div style={{ marginBottom: '0.85rem' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent-blue)', marginBottom: '0.25rem' }}>
                 Reconstructed Decision:
               </div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#ffffff', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.4 }}>
                 {with_hindsight.explanation.decision}
               </div>
             </div>
 
             {/* Reconstructed Reasons */}
-            <div style={{ marginBottom: '1rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.45rem' }}>
+            <div style={{ marginBottom: '0.85rem' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.35rem' }}>
                 Key Rationales (Authoritative Sources):
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
                 {with_hindsight.explanation.reasons.map((r, idx) => (
                   <div key={idx} style={{
-                    padding: '0.6rem 0.8rem',
-                    backgroundColor: 'rgba(10, 15, 29, 0.6)',
+                    padding: '0.55rem 0.75rem',
+                    backgroundColor: '#f8fafc',
                     borderRadius: '6px',
-                    border: '1px solid var(--border-subtle)',
-                    fontSize: '0.82rem',
+                    border: '1px solid var(--border-default)',
+                    fontSize: '0.8rem',
                     color: 'var(--text-primary)',
                     lineHeight: 1.45,
                   }}>
                     <div>{r.reason}</div>
                     {r.evidence_ids && r.evidence_ids.length > 0 && (
-                      <div style={{ display: 'flex', gap: '0.3rem', marginTop: '0.35rem', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', gap: '0.25rem', marginTop: '0.3rem', flexWrap: 'wrap' }}>
                         {r.evidence_ids.map((id) => (
                           <span key={id} className="badge-evidence" style={{ fontSize: '0.65rem' }}>
                             {id}
@@ -284,12 +289,12 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
 
             {/* Alternatives Considered */}
             {with_hindsight.explanation.alternatives && with_hindsight.explanation.alternatives.length > 0 && (
-              <div style={{ marginBottom: '1rem' }}>
-                <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.35rem' }}>
+              <div style={{ marginBottom: '0.85rem' }}>
+                <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
                   Alternatives Considered:
                 </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  {with_hindsight.explanation.alternatives.map((a) => a.name).join(', ')} (rejected due to missing domestic licenses or protocol incompatibilities).
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+                  {with_hindsight.explanation.alternatives.map((a) => a.name).join(', ')} (rejected due to domestic licensing or protocol constraints).
                 </div>
               </div>
             )}
@@ -297,31 +302,33 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
 
           {/* Hindsight Bank Context & Continue CTA */}
           <div style={{
-            marginTop: '1.5rem',
-            paddingTop: '0.85rem',
-            borderTop: '1px solid var(--border-subtle)',
+            marginTop: '1.25rem',
+            paddingTop: '0.75rem',
+            borderTop: '1px solid var(--border-default)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '0.75rem',
           }}>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
               Bank: <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>{with_hindsight.bank_id || 'finflow-why'}</span>
             </div>
 
             <button
               onClick={() => onContinueTemporal(with_hindsight.explanation)}
-              className="btn btn-warning"
+              className="btn"
               style={{
-                fontSize: '0.82rem',
-                padding: '0.45rem 1rem',
-                fontWeight: 700,
-                boxShadow: '0 2px 10px rgba(245, 158, 11, 0.3)',
+                backgroundColor: '#d97706',
+                color: '#ffffff',
+                border: '1px solid #b45309',
+                fontSize: '0.78rem',
+                padding: '0.4rem 0.85rem',
+                fontWeight: 600,
               }}
             >
               <span>Continue with temporal analysis</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={13} />
             </button>
           </div>
         </div>
@@ -329,56 +336,56 @@ export const MemoryComparison: React.FC<MemoryComparisonProps> = ({
 
       {/* Memory Flow Visualization */}
       <div className="panel" style={{
-        padding: '1.5rem 1.75rem',
-        backgroundColor: 'rgba(15, 23, 42, 0.6)',
-        border: '1px solid var(--border-subtle)',
+        padding: '1.25rem 1.5rem',
+        backgroundColor: '#ffffff',
+        border: '1px solid var(--border-default)',
       }}>
-        <h4 style={{ fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+        <h4 style={{ fontSize: '0.82rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', marginBottom: '0.85rem' }}>
           Memory Flow Architecture
         </h4>
 
-        <div className="grid-two" style={{ gap: '1.5rem' }}>
+        <div className="grid-two" style={{ gap: '1.25rem' }}>
           {/* Flow Without Memory */}
           <div style={{
-            padding: '1rem',
-            backgroundColor: 'rgba(10, 15, 29, 0.6)',
-            borderRadius: '8px',
-            border: '1px solid var(--border-subtle)',
-            fontSize: '0.82rem',
+            padding: '0.85rem 1rem',
+            backgroundColor: '#f8fafc',
+            borderRadius: '6px',
+            border: '1px solid var(--border-default)',
+            fontSize: '0.8rem',
             color: 'var(--text-secondary)',
           }}>
-            <div style={{ fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+            <div style={{ fontWeight: 700, color: 'var(--text-muted)', marginBottom: '0.4rem', fontSize: '0.75rem' }}>
               WITHOUT MEMORY PIPELINE:
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: '0.78rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
               <span>Question</span>
               <span>&rarr;</span>
               <span>No Context</span>
               <span>&rarr;</span>
-              <span style={{ color: '#94a3b8', fontWeight: 700 }}>Insufficient Evidence</span>
+              <span style={{ color: 'var(--text-muted)', fontWeight: 700 }}>Insufficient Evidence</span>
             </div>
           </div>
 
           {/* Flow With Hindsight */}
           <div style={{
-            padding: '1rem',
-            backgroundColor: 'rgba(10, 15, 29, 0.6)',
-            borderRadius: '8px',
-            border: '1px solid rgba(59, 130, 246, 0.25)',
-            fontSize: '0.82rem',
+            padding: '0.85rem 1rem',
+            backgroundColor: '#eff6ff',
+            borderRadius: '6px',
+            border: '1px solid #bfdbfe',
+            fontSize: '0.8rem',
             color: 'var(--text-secondary)',
           }}>
-            <div style={{ fontWeight: 700, color: '#60a5fa', marginBottom: '0.5rem' }}>
+            <div style={{ fontWeight: 700, color: 'var(--accent-blue)', marginBottom: '0.4rem', fontSize: '0.75rem' }}>
               WITH HINDSIGHT PIPELINE:
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: '0.78rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: '0.75rem' }}>
               <span>Question</span>
               <span>&rarr;</span>
-              <span style={{ color: '#60a5fa' }}>Hindsight Recall</span>
+              <span style={{ color: 'var(--accent-blue)' }}>Hindsight Recall</span>
               <span>&rarr;</span>
               <span>Evidence + Prior Memory</span>
               <span>&rarr;</span>
-              <span style={{ color: '#34d399', fontWeight: 700 }}>Decision Reconstructed</span>
+              <span style={{ color: '#065f46', fontWeight: 700 }}>Decision Reconstructed</span>
             </div>
           </div>
         </div>

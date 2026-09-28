@@ -36,44 +36,42 @@ export const InvestigationBar: React.FC<InvestigationBarProps> = ({
     <div style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
       {/* Hero Typography */}
       <h1 style={{
-        fontSize: '2.35rem',
-        fontWeight: 800,
-        letterSpacing: '-0.035em',
-        lineHeight: 1.2,
-        marginBottom: '0.75rem',
-        background: 'linear-gradient(180deg, #ffffff 30%, #94a3b8 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
+        fontSize: '2rem',
+        fontWeight: 700,
+        letterSpacing: '-0.025em',
+        lineHeight: 1.25,
+        marginBottom: '0.5rem',
+        color: 'var(--text-primary)',
       }}>
         Why does this decision still exist?
       </h1>
       <p style={{
-        fontSize: '1.05rem',
+        fontSize: '0.95rem',
         color: 'var(--text-secondary)',
-        maxWidth: '680px',
-        margin: '0 auto 1.75rem auto',
-        lineHeight: 1.6,
+        maxWidth: '620px',
+        margin: '0 auto 1.5rem auto',
+        lineHeight: 1.55,
       }}>
-        WHY reconstructs the reasoning behind organizational decisions and detects when the assumptions behind them change.
+        WHY reconstructs the reasoning behind organizational decisions and detects when foundational assumptions change.
       </p>
 
-      {/* Prominent Investigation Form */}
+      {/* Professional Investigation Form */}
       <form onSubmit={handleSubmit} style={{
-        maxWidth: '820px',
+        maxWidth: '780px',
         margin: '0 auto',
         position: 'relative',
       }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          backgroundColor: 'var(--bg-surface)',
-          border: '1px solid var(--border-default)',
-          borderRadius: '12px',
-          padding: '0.4rem 0.5rem 0.4rem 1.1rem',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
-          transition: 'all 0.2s ease',
+          backgroundColor: '#ffffff',
+          border: '1px solid var(--border-strong)',
+          borderRadius: '8px',
+          padding: '0.35rem 0.45rem 0.35rem 1rem',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
         }}>
-          <Search size={18} style={{ color: '#64748b', marginRight: '0.75rem', flexShrink: 0 }} />
+          <Search size={17} style={{ color: 'var(--text-muted)', marginRight: '0.65rem', flexShrink: 0 }} />
           <input
             type="text"
             value={question}
@@ -86,7 +84,7 @@ export const InvestigationBar: React.FC<InvestigationBarProps> = ({
               border: 'none',
               outline: 'none',
               color: 'var(--text-primary)',
-              fontSize: '0.95rem',
+              fontSize: '0.92rem',
               fontWeight: 500,
             }}
           />
@@ -94,14 +92,14 @@ export const InvestigationBar: React.FC<InvestigationBarProps> = ({
             type="submit"
             disabled={isLoading || !question.trim()}
             className="btn btn-primary"
-            style={{ padding: '0.7rem 1.4rem' }}
+            style={{ padding: '0.55rem 1.15rem' }}
           >
             {isLoading ? (
               <span>Investigating...</span>
             ) : (
               <>
                 <span>Investigate</span>
-                <ArrowRight size={15} />
+                <ArrowRight size={14} />
               </>
             )}
           </button>
@@ -115,10 +113,10 @@ export const InvestigationBar: React.FC<InvestigationBarProps> = ({
         justifyContent: 'center',
         flexWrap: 'wrap',
         gap: '0.5rem',
-        marginTop: '1rem',
+        marginTop: '0.85rem',
       }}>
         <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-          <Sparkles size={12} style={{ color: '#60a5fa' }} /> Try:
+          <Sparkles size={11} style={{ color: 'var(--accent-blue)' }} /> Suggestions:
         </span>
         {suggestedChips.map((chip, idx) => (
           <button

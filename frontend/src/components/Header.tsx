@@ -7,85 +7,84 @@ interface HeaderProps {
   onToggleMode?: (mode: 'normal' | 'demo') => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ 
+export const Header: React.FC<HeaderProps> = ({
   isHindsightConnected = true,
   viewMode = 'normal',
   onToggleMode,
 }) => {
   return (
     <header style={{
-      borderBottom: '1px solid var(--border-subtle)',
-      backgroundColor: 'rgba(15, 23, 42, 0.85)',
-      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid var(--border-default)',
+      backgroundColor: '#ffffff',
       position: 'sticky',
       top: 0,
       zIndex: 20,
+      boxShadow: '0 1px 2px rgba(0, 0, 0, 0.03)',
     }}>
       <div className="container" style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '70px',
+        height: '64px',
       }}>
         {/* Brand identity */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '9px',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+            width: '32px',
+            height: '32px',
+            borderRadius: '6px',
+            backgroundColor: '#0f172a',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontWeight: 800,
-            fontSize: '1.15rem',
+            fontSize: '1.05rem',
             color: '#ffffff',
-            boxShadow: '0 2px 10px rgba(59, 130, 246, 0.35)',
             letterSpacing: '-0.02em',
           }}>
             ?
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#ffffff' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+              <span style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>
                 WHY
               </span>
               <span style={{
-                fontSize: '0.65rem',
+                fontSize: '0.68rem',
                 fontWeight: 600,
-                padding: '0.15rem 0.45rem',
+                padding: '0.1rem 0.45rem',
                 borderRadius: '4px',
-                backgroundColor: 'rgba(59, 130, 246, 0.15)',
-                color: '#60a5fa',
-                border: '1px solid rgba(59, 130, 246, 0.3)',
-                letterSpacing: '0.04em',
+                backgroundColor: '#eff6ff',
+                color: '#1d4ed8',
+                border: '1px solid #bfdbfe',
+                letterSpacing: '0.03em',
                 textTransform: 'uppercase',
               }}>
                 Decision Memory
               </span>
             </div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+            <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
               Remember why. Know when it changes.
             </div>
           </div>
         </div>
 
         {/* Right context: Organization & Hindsight status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.45rem',
-            padding: '0.35rem 0.75rem',
+            gap: '0.4rem',
+            padding: '0.3rem 0.65rem',
             borderRadius: '6px',
-            backgroundColor: 'rgba(30, 41, 59, 0.7)',
+            backgroundColor: '#f8fafc',
             border: '1px solid var(--border-default)',
-            fontSize: '0.8rem',
+            fontSize: '0.78rem',
             color: 'var(--text-secondary)',
           }}>
-            <Database size={13} style={{ color: '#94a3b8' }} />
+            <Database size={13} style={{ color: 'var(--text-muted)' }} />
             <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>FinFlow</span>
-            <span style={{ color: 'var(--text-muted)' }}>org</span>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>org</span>
           </div>
 
           {/* Mode Switcher */}
@@ -97,11 +96,10 @@ export const Header: React.FC<HeaderProps> = ({
               style={{
                 fontSize: '0.78rem',
                 padding: '0.35rem 0.75rem',
-                gap: '0.4rem',
-                borderRadius: '6px',
+                gap: '0.35rem',
               }}
             >
-              <Compass size={14} />
+              <Compass size={13} />
               <span>Normal Mode</span>
             </button>
           ) : (
@@ -111,31 +109,30 @@ export const Header: React.FC<HeaderProps> = ({
               className="btn btn-primary"
               style={{
                 fontSize: '0.78rem',
-                padding: '0.35rem 0.85rem',
-                gap: '0.4rem',
-                borderRadius: '6px',
-                boxShadow: '0 2px 10px rgba(59, 130, 246, 0.4)',
+                padding: '0.35rem 0.8rem',
+                gap: '0.35rem',
               }}
             >
-              <Sparkles size={14} />
+              <Sparkles size={13} />
               <span>Run Guided Demo</span>
             </button>
           )}
 
+          {/* Hindsight connection status pill */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.45rem',
-            padding: '0.35rem 0.75rem',
+            padding: '0.3rem 0.65rem',
             borderRadius: '6px',
-            backgroundColor: isHindsightConnected ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-            border: `1px solid ${isHindsightConnected ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`,
-            fontSize: '0.8rem',
+            backgroundColor: isHindsightConnected ? '#ecfdf5' : '#fef2f2',
+            border: `1px solid ${isHindsightConnected ? '#a7f3d0' : '#fecaca'}`,
+            fontSize: '0.78rem',
           }}>
             <span className={`pulsing-dot ${isHindsightConnected ? 'dot-success' : 'dot-error'}`} />
             <span style={{
               fontWeight: 600,
-              color: isHindsightConnected ? '#34d399' : '#f87171',
+              color: isHindsightConnected ? '#065f46' : '#991b1b',
             }}>
               {isHindsightConnected ? 'Hindsight Connected' : 'Hindsight Offline'}
             </span>

@@ -36,12 +36,12 @@ export const ReasonComparison: React.FC<ReasonComparisonProps> = ({
         fontSize: '0.65rem',
         fontWeight: 700,
         textTransform: 'uppercase',
-        letterSpacing: '0.05em',
+        letterSpacing: '0.04em',
         padding: '0.15rem 0.45rem',
         borderRadius: '4px',
-        backgroundColor: isHigh ? 'rgba(239, 68, 68, 0.15)' : 'rgba(59, 130, 246, 0.15)',
-        color: isHigh ? '#f87171' : '#60a5fa',
-        border: `1px solid ${isHigh ? 'rgba(239, 68, 68, 0.3)' : 'rgba(59, 130, 246, 0.3)'}`,
+        backgroundColor: isHigh ? '#fef2f2' : '#eff6ff',
+        color: isHigh ? '#991b1b' : '#1d4ed8',
+        border: `1px solid ${isHigh ? '#fecaca' : '#bfdbfe'}`,
       }}>
         {impact} IMPACT
       </span>
@@ -54,26 +54,26 @@ export const ReasonComparison: React.FC<ReasonComparisonProps> = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: '1rem',
+        marginBottom: '0.85rem',
       }}>
         <div>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
             Reason-by-Reason Temporal Invalidation
           </h3>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-            Comparing original 2024 rationale points against new 2026 organizational evidence.
+          <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+            Comparing original 2024 rationale points against subsequent 2025–2026 organizational evidence.
           </p>
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {reasons.map((item, idx) => (
           <div
             key={idx}
             className="panel"
             style={{
-              padding: '1.4rem',
-              backgroundColor: 'var(--bg-surface)',
+              padding: '1.25rem',
+              backgroundColor: '#ffffff',
               borderLeft: item.current_support === 'INVALIDATED'
                 ? '4px solid var(--status-invalidated)'
                 : item.current_support === 'WEAKENED'
@@ -86,13 +86,13 @@ export const ReasonComparison: React.FC<ReasonComparisonProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '1rem',
-              paddingBottom: '0.75rem',
-              borderBottom: '1px solid var(--border-subtle)',
+              marginBottom: '0.85rem',
+              paddingBottom: '0.65rem',
+              borderBottom: '1px solid var(--border-default)',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
                 {getImpactBadge(item.impact)}
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
                   Reason #{idx + 1}
                 </span>
               </div>
@@ -102,30 +102,30 @@ export const ReasonComparison: React.FC<ReasonComparisonProps> = ({
             </div>
 
             {/* Grid comparing 2024 Historical Reason vs 2026 Assessment */}
-            <div className="grid-two" style={{ gap: '1.5rem' }}>
+            <div className="grid-two" style={{ gap: '1.25rem' }}>
               {/* Left Column: 2024 Historical Reason */}
               <div style={{
-                backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                padding: '1rem',
-                borderRadius: '8px',
-                border: '1px solid var(--border-subtle)',
+                backgroundColor: '#f8fafc',
+                padding: '0.9rem',
+                borderRadius: '6px',
+                border: '1px solid var(--border-default)',
               }}>
                 <div style={{
-                  fontSize: '0.7rem',
+                  fontSize: '0.68rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
-                  color: '#60a5fa',
-                  marginBottom: '0.35rem',
+                  color: 'var(--accent-blue)',
+                  marginBottom: '0.3rem',
                 }}>
                   2024 Original Rationale:
                 </div>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '0.75rem' }}>
+                <div style={{ fontSize: '0.86rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '0.65rem' }}>
                   {item.original_reason}
                 </div>
                 {item.original_evidence_ids.length > 0 && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Historical Citations:</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Historical Citations:</span>
                     {item.original_evidence_ids.map((docId) => (
                       <span
                         key={docId}
@@ -143,33 +143,40 @@ export const ReasonComparison: React.FC<ReasonComparisonProps> = ({
               {/* Right Column: 2026 Later Evidence / What Changed */}
               <div style={{
                 backgroundColor: item.current_support === 'INVALIDATED'
-                  ? 'rgba(244, 63, 94, 0.06)'
-                  : 'rgba(245, 158, 11, 0.06)',
-                padding: '1rem',
-                borderRadius: '8px',
-                border: `1px solid ${item.current_support === 'INVALIDATED' ? 'rgba(244, 63, 94, 0.25)' : 'rgba(245, 158, 11, 0.25)'}`,
+                  ? '#fef2f2'
+                  : item.current_support === 'WEAKENED'
+                  ? '#fffbeb'
+                  : '#ecfdf5',
+                padding: '0.9rem',
+                borderRadius: '6px',
+                border: `1px solid ${
+                  item.current_support === 'INVALIDATED'
+                    ? '#fecaca'
+                    : item.current_support === 'WEAKENED'
+                    ? '#fde68a'
+                    : '#a7f3d0'
+                }`,
               }}>
                 <div style={{
-                  fontSize: '0.7rem',
+                  fontSize: '0.68rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
-                  color: item.current_support === 'INVALIDATED' ? '#fb7185' : '#fbbf24',
-                  marginBottom: '0.35rem',
+                  color: item.current_support === 'INVALIDATED' ? '#991b1b' : '#92400e',
+                  marginBottom: '0.3rem',
                 }}>
-                  2026 Evidence & Assessment:
+                  Later Evidence & Assessment:
                 </div>
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '0.75rem' }}>
+                <div style={{ fontSize: '0.86rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '0.65rem' }}>
                   {item.assessment}
                 </div>
                 {item.new_evidence_ids.length > 0 && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>New Evidence Citations:</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>New Evidence Citations:</span>
                     {item.new_evidence_ids.map((docId) => (
                       <span
                         key={docId}
                         className="badge-evidence"
-                        style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#fcd34d', borderColor: 'rgba(245, 158, 11, 0.35)' }}
                         onClick={() => onSelectDoc && onSelectDoc(docId)}
                         title="View citation in Evidence Trail"
                       >

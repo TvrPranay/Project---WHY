@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { 
-  BrainCircuit, 
-  CheckCircle2, 
-  History, 
-  ChevronDown, 
-  ChevronUp, 
-  Sparkles, 
+import {
+  BrainCircuit,
+  CheckCircle2,
+  History,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
   Info,
   Calendar
 } from 'lucide-react';
-import { 
-  DecisionAssessment, 
-  DecisionExplanation, 
-  PreviousInvestigationItem, 
-  RememberDecisionResponse 
+import {
+  DecisionAssessment,
+  DecisionExplanation,
+  PreviousInvestigationItem,
+  RememberDecisionResponse
 } from '../types/decision';
 import { rememberDecision, fetchDecisionHistory } from '../services/api';
 
@@ -84,10 +84,10 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
 
   return (
     <div className="panel" style={{
-      padding: '1.75rem',
+      padding: '1.5rem',
       marginBottom: '2.5rem',
-      backgroundColor: 'rgba(15, 23, 42, 0.75)',
-      border: '1px solid rgba(59, 130, 246, 0.3)',
+      backgroundColor: '#ffffff',
+      border: '1px solid var(--border-default)',
       position: 'relative',
     }}>
       {/* Header */}
@@ -97,30 +97,30 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         gap: '1rem',
-        marginBottom: '1rem',
+        marginBottom: '0.85rem',
         paddingBottom: '0.75rem',
-        borderBottom: '1px solid var(--border-subtle)',
+        borderBottom: '1px solid var(--border-default)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           <div style={{
             width: '32px',
             height: '32px',
-            borderRadius: '8px',
-            backgroundColor: 'rgba(59, 130, 246, 0.15)',
+            borderRadius: '6px',
+            backgroundColor: '#eff6ff',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
+            border: '1px solid #bfdbfe',
           }}>
-            <BrainCircuit size={17} style={{ color: '#60a5fa' }} />
+            <BrainCircuit size={16} style={{ color: 'var(--accent-blue)' }} />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.02em', margin: 0 }}>
-                DECISION MEMORY
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: 0 }}>
+                Decision Memory & Compounding Context
               </h3>
               <span className="badge badge-info" style={{ fontSize: '0.65rem' }}>
-                Hindsight Evolution
+                Hindsight Bank
               </span>
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
@@ -130,21 +130,21 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
         </div>
 
         {/* Buttons: Remember & View History */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', flexWrap: 'wrap' }}>
           {rememberedResponse ? (
             <div style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.4rem',
-              padding: '0.4rem 0.85rem',
+              padding: '0.35rem 0.75rem',
               borderRadius: '6px',
-              backgroundColor: 'rgba(16, 185, 129, 0.15)',
-              border: '1px solid rgba(16, 185, 129, 0.35)',
-              fontSize: '0.8rem',
+              backgroundColor: '#ecfdf5',
+              border: '1px solid #a7f3d0',
+              fontSize: '0.78rem',
               fontWeight: 600,
-              color: '#34d399',
+              color: '#065f46',
             }}>
-              <CheckCircle2 size={14} />
+              <CheckCircle2 size={13} />
               <span>Remembered in Hindsight</span>
             </div>
           ) : (
@@ -152,9 +152,9 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
               onClick={handleRemember}
               disabled={isRemembering}
               className="btn btn-primary"
-              style={{ fontSize: '0.82rem', padding: '0.45rem 0.95rem' }}
+              style={{ fontSize: '0.78rem', padding: '0.4rem 0.85rem' }}
             >
-              <Sparkles size={13} />
+              <Sparkles size={12} />
               <span>{isRemembering ? 'Retaining in Hindsight...' : 'Remember this investigation'}</span>
             </button>
           )}
@@ -163,11 +163,11 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
             onClick={handleToggleHistory}
             disabled={isLoadingHistory}
             className="btn btn-secondary"
-            style={{ fontSize: '0.82rem', padding: '0.45rem 0.95rem' }}
+            style={{ fontSize: '0.78rem', padding: '0.4rem 0.85rem' }}
           >
-            <History size={13} />
+            <History size={12} />
             <span>{isLoadingHistory ? 'Recalling...' : 'View remembered reasoning'}</span>
-            {showHistoryPanel ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+            {showHistoryPanel ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
           </button>
         </div>
       </div>
@@ -175,24 +175,24 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
       {/* Remember success or error message */}
       {rememberedResponse && (
         <div style={{
-          backgroundColor: 'rgba(16, 185, 129, 0.08)',
-          border: '1px solid rgba(16, 185, 129, 0.25)',
+          backgroundColor: '#ecfdf5',
+          border: '1px solid #a7f3d0',
           borderRadius: '6px',
-          padding: '0.65rem 0.9rem',
-          marginBottom: '1rem',
-          fontSize: '0.82rem',
-          color: '#34d399',
+          padding: '0.6rem 0.85rem',
+          marginBottom: '0.85rem',
+          fontSize: '0.8rem',
+          color: '#065f46',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
           <div>
-            <strong>✓ Remembered:</strong> WHY has stored this decision reasoning in Hindsight memory.
-            <span style={{ color: 'var(--text-muted)', marginLeft: '0.5rem', fontFamily: 'var(--font-mono)' }}>
+            <strong>✓ Remembered:</strong> WHY has retained this decision reasoning in Hindsight persistent memory.
+            <span style={{ color: 'var(--text-muted)', marginLeft: '0.4rem', fontFamily: 'var(--font-mono)' }}>
               ({rememberedResponse.document_id})
             </span>
           </div>
-          <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+          <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
             Memory Type: Decision Investigation
           </span>
         </div>
@@ -200,65 +200,65 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
 
       {rememberError && (
         <div style={{
-          backgroundColor: 'rgba(239, 68, 68, 0.08)',
-          border: '1px solid rgba(239, 68, 68, 0.25)',
+          backgroundColor: '#fef2f2',
+          border: '1px solid #fecaca',
           borderRadius: '6px',
-          padding: '0.65rem 0.9rem',
-          marginBottom: '1rem',
-          fontSize: '0.82rem',
-          color: '#f87171',
+          padding: '0.6rem 0.85rem',
+          marginBottom: '0.85rem',
+          fontSize: '0.8rem',
+          color: '#991b1b',
         }}>
           {rememberError}
         </div>
       )}
 
       {/* Description text */}
-      <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: '0 0 0.85rem 0' }}>
-        WHY can now use this completed investigation as reasoning context in future investigations. 
-        Unlike standard retrieval which stores static documents, WHY accumulates decision reasoning memories 
+      <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: '0 0 0.75rem 0' }}>
+        WHY uses this completed investigation as reasoning context in future inquiries.
+        Unlike standard retrieval which stores static documents, WHY accumulates decision reasoning memories
         while enforcing strict epistemic hierarchy: <strong>primary organizational evidence always supersedes prior AI reasoning.</strong>
       </p>
 
       {/* Expandable: Previous WHY Investigations Panel */}
       {showHistoryPanel && (
         <div style={{
-          marginTop: '1rem',
-          padding: '1.25rem',
-          backgroundColor: 'rgba(10, 15, 29, 0.8)',
-          borderRadius: '8px',
+          marginTop: '0.85rem',
+          padding: '1.1rem',
+          backgroundColor: '#f8fafc',
+          borderRadius: '6px',
           border: '1px solid var(--border-default)',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-            <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.04em', margin: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem' }}>
+            <h4 style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.04em', margin: 0 }}>
               PREVIOUS WHY INVESTIGATIONS ({historyItems ? historyItems.length : priorCount})
             </h4>
             <span style={{
               fontSize: '0.68rem',
-              fontWeight: 700,
-              padding: '0.15rem 0.5rem',
+              fontWeight: 600,
+              padding: '0.15rem 0.45rem',
               borderRadius: '4px',
-              backgroundColor: 'rgba(245, 158, 11, 0.12)',
-              color: '#fbbf24',
-              border: '1px solid rgba(245, 158, 11, 0.3)',
+              backgroundColor: '#fffbeb',
+              color: '#92400e',
+              border: '1px solid #fde68a',
             }}>
-              Prior AI reasoning &bull; Not primary evidence
+              Prior AI reasoning &bull; Authoritative primary evidence takes precedence
             </span>
           </div>
 
           {historyItems && historyItems.length > 0 ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               {historyItems.map((inv, idx) => (
                 <div
                   key={idx}
                   style={{
-                    backgroundColor: 'rgba(15, 23, 42, 0.6)',
-                    border: '1px solid var(--border-subtle)',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid var(--border-default)',
                     borderRadius: '6px',
-                    padding: '0.85rem',
+                    padding: '0.8rem',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                    <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                       {inv.decision}
                     </span>
                     <span className="badge badge-review" style={{ fontSize: '0.65rem' }}>
@@ -272,30 +272,30 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
                       color: 'var(--text-muted)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.3rem',
-                      marginBottom: '0.4rem',
+                      gap: '0.25rem',
+                      marginBottom: '0.35rem',
                       fontFamily: 'var(--font-mono)',
                     }}>
                       <Calendar size={11} />
-                      Investigated on: {inv.investigation_date} &bull; Confidence: {(inv.confidence * 100).toFixed(0)}%
+                      Investigated: {inv.investigation_date} &bull; Confidence: {(inv.confidence * 100).toFixed(0)}%
                     </div>
                   )}
 
                   {inv.key_reasoning && inv.key_reasoning.length > 0 && (
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.45, marginBottom: '0.4rem' }}>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.45, marginBottom: '0.35rem' }}>
                       <strong>Key Reasoning:</strong> {inv.key_reasoning.join('; ')}
                     </div>
                   )}
 
                   {inv.changed_assumptions && inv.changed_assumptions.length > 0 && (
-                    <div style={{ fontSize: '0.78rem', color: '#fbbf24', lineHeight: 1.4, marginBottom: '0.4rem' }}>
-                      <strong>Invalidated Assumptions:</strong> {inv.changed_assumptions.join('; ')}
+                    <div style={{ fontSize: '0.78rem', color: '#92400e', lineHeight: 1.4, marginBottom: '0.35rem' }}>
+                      <strong>Changed Assumptions:</strong> {inv.changed_assumptions.join('; ')}
                     </div>
                   )}
 
                   {inv.evidence_ids && inv.evidence_ids.length > 0 && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
-                      <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Citations cited:</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Citations:</span>
                       {inv.evidence_ids.map((id) => (
                         <span key={id} className="badge-evidence" style={{ fontSize: '0.65rem', padding: '0.1rem 0.35rem' }}>
                           {id}
@@ -307,7 +307,7 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
               ))}
             </div>
           ) : (
-            <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
               No prior investigations recorded in Hindsight yet. Click &ldquo;Remember this investigation&rdquo; above to retain the first one.
             </div>
           )}
@@ -315,7 +315,7 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
       )}
 
       {/* Developer / Demo Transparent Debug Panel */}
-      <div style={{ marginTop: '0.75rem', paddingTop: '0.6rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+      <div style={{ marginTop: '0.65rem', paddingTop: '0.55rem', borderTop: '1px solid var(--border-default)' }}>
         <button
           onClick={() => setShowDebugPanel((prev) => !prev)}
           style={{
@@ -326,49 +326,50 @@ export const DecisionMemorySection: React.FC<DecisionMemorySectionProps> = ({
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.35rem',
+            gap: '0.3rem',
             padding: 0,
+            fontFamily: 'inherit',
           }}
         >
-          <Info size={12} />
+          <Info size={11} />
           <span>{showDebugPanel ? 'Hide Memory Context Inspection' : 'Inspect Memory Context Used (Judge & Demo View)'}</span>
           {showDebugPanel ? <ChevronUp size={11} /> : <ChevronDown size={11} />}
         </button>
 
         {showDebugPanel && (
           <div style={{
-            marginTop: '0.6rem',
+            marginTop: '0.55rem',
             padding: '0.75rem',
             borderRadius: '6px',
-            backgroundColor: 'rgba(10, 15, 29, 0.6)',
-            border: '1px solid var(--border-subtle)',
-            fontSize: '0.78rem',
+            backgroundColor: '#f8fafc',
+            border: '1px solid var(--border-default)',
+            fontSize: '0.76rem',
             color: 'var(--text-secondary)',
             display: 'flex',
             flexWrap: 'wrap',
             gap: '1.5rem',
           }}>
             <div>
-              <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem', textTransform: 'uppercase' }}>
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem', textTransform: 'uppercase' }}>
                 Primary Evidence Recalled:
               </div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#60a5fa' }}>
+              <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--accent-blue)' }}>
                 {primaryEvidenceCount} records
               </div>
             </div>
             <div>
-              <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem', textTransform: 'uppercase' }}>
-                Previous WHY Investigations Recalled:
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem', textTransform: 'uppercase' }}>
+                Previous WHY Investigations:
               </div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#fbbf24' }}>
+              <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#92400e' }}>
                 {priorCount} prior memories
               </div>
             </div>
             <div>
-              <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem', textTransform: 'uppercase' }}>
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem', textTransform: 'uppercase' }}>
                 Epistemic Priority:
               </div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#34d399' }}>
+              <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#065f46' }}>
                 Primary Evidence Supersedes AI Reasoning
               </div>
             </div>

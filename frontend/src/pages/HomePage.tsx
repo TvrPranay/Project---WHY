@@ -170,16 +170,16 @@ export const HomePage: React.FC<HomePageProps> = ({ health, onLaunchGuidedDemo }
       {/* Backend connection warning if health check fails */}
       {health.error && (
         <div style={{
-          backgroundColor: 'rgba(245, 158, 11, 0.1)',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
-          borderRadius: '8px',
+          backgroundColor: '#fffbeb',
+          border: '1px solid #fde68a',
+          borderRadius: '6px',
           padding: '0.65rem 1rem',
           marginBottom: '1.5rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           fontSize: '0.82rem',
-          color: '#fbbf24',
+          color: '#92400e',
         }}>
           <span>Backend at http://127.0.0.1:8001 is connecting or not yet responding.</span>
           <button
@@ -217,12 +217,11 @@ export const HomePage: React.FC<HomePageProps> = ({ health, onLaunchGuidedDemo }
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.55rem',
-              padding: '0.6rem 1.35rem',
-              fontSize: '0.86rem',
-              fontWeight: 700,
-              borderRadius: '10px',
-              boxShadow: '0 2px 12px rgba(59, 130, 246, 0.45)',
+              gap: '0.45rem',
+              padding: '0.55rem 1.15rem',
+              fontSize: '0.84rem',
+              fontWeight: 600,
+              borderRadius: '6px',
             }}
           >
             <Sparkles size={16} />
@@ -259,23 +258,23 @@ export const HomePage: React.FC<HomePageProps> = ({ health, onLaunchGuidedDemo }
       {/* Comparison Loading Indicator */}
       {isLoadingComparison && (
         <div className="panel" style={{
-          padding: '2.5rem',
+          padding: '2rem',
           textAlign: 'center',
-          marginBottom: '2.5rem',
-          backgroundColor: 'rgba(15, 23, 42, 0.7)',
-          border: '1px solid rgba(59, 130, 246, 0.3)',
+          marginBottom: '2rem',
+          backgroundColor: '#ffffff',
+          border: '1px solid var(--border-default)',
         }}>
           <div style={{
             display: 'inline-block',
-            width: '36px',
-            height: '36px',
-            border: '3px solid rgba(59, 130, 246, 0.2)',
-            borderTopColor: '#3b82f6',
+            width: '32px',
+            height: '32px',
+            border: '3px solid #e2e8f0',
+            borderTopColor: 'var(--accent-blue)',
             borderRadius: '50%',
             animation: 'spin 0.8s linear infinite',
-            marginBottom: '1rem',
+            marginBottom: '0.85rem',
           }} />
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.35rem' }}>
+          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
             Running Controlled Experiment...
           </h3>
           <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', maxWidth: '560px', margin: '0 auto', lineHeight: 1.5 }}>
@@ -296,15 +295,15 @@ export const HomePage: React.FC<HomePageProps> = ({ health, onLaunchGuidedDemo }
       {/* Error notification alert */}
       {errorMessage && (
         <div style={{
-          backgroundColor: 'rgba(239, 68, 68, 0.1)',
-          border: '1px solid rgba(239, 68, 68, 0.3)',
-          borderRadius: '8px',
-          padding: '1rem 1.25rem',
-          marginBottom: '2rem',
+          backgroundColor: '#fef2f2',
+          border: '1px solid #fecaca',
+          borderRadius: '6px',
+          padding: '0.75rem 1rem',
+          marginBottom: '1.5rem',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          color: '#f87171',
+          color: '#991b1b',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
             <AlertCircle size={18} />
@@ -331,21 +330,21 @@ export const HomePage: React.FC<HomePageProps> = ({ health, onLaunchGuidedDemo }
           {/* Second Run Callout: Previous reasoning found in Hindsight */}
           {explanation.prior_investigations_count !== undefined && explanation.prior_investigations_count > 0 && (
             <div style={{
-              backgroundColor: 'rgba(59, 130, 246, 0.1)',
-              border: '1px solid rgba(59, 130, 246, 0.35)',
-              borderRadius: '8px',
-              padding: '0.85rem 1.25rem',
-              marginBottom: '1.75rem',
+              backgroundColor: '#eff6ff',
+              border: '1px solid #bfdbfe',
+              borderRadius: '6px',
+              padding: '0.75rem 1rem',
+              marginBottom: '1.5rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
               gap: '0.75rem',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                <BrainCircuit size={19} style={{ color: '#60a5fa' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <BrainCircuit size={17} style={{ color: 'var(--accent-blue)' }} />
                 <div>
-                  <span style={{ fontWeight: 700, color: '#ffffff', fontSize: '0.92rem' }}>
+                  <span style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.88rem' }}>
                     Previous reasoning found:
                   </span>{' '}
                   <span style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>
